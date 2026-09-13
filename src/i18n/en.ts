@@ -200,7 +200,8 @@ export const en: Dict = {
     minNights: (n) => `Min. ${n} nights`,
     deposit: '50% deposit to confirm the booking',
     caution: 'CZK 5,000 refundable security deposit on arrival',
-    eurNote: 'Prices in euros are approximate; we invoice in Czech crowns (CZK).',
+    eurNote: 'Prices in euros are approximate, rounded up to the nearest 10; we invoice in Czech crowns (CZK).',
+    rateNote: (rate, date) => `ECB reference rate ${rate} CZK/EUR as of ${date}.`,
     terms: [
       { q: 'How do booking and payment work?', a: 'To confirm a booking we ask for a 50% deposit. The balance is due one month before arrival for summer, Christmas and New Year; for other stays it can be paid in advance or in cash on arrival. On arrival we collect a refundable security deposit of CZK 5,000.' },
       { q: 'What is the cancellation policy?', a: 'Cancellations more than 30 days before arrival are free of charge and the deposit is refunded in full. For cancellations less than 30 days before arrival the deposit is not refunded.' },

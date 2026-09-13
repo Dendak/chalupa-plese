@@ -28,7 +28,7 @@ export const FORM = {
   accessKey: '',
 };
 
-// Orientační kurz pro přepočet cen v EN/DE verzi (Kč za 1 €)
+// Záložní kurz pro přepočet cen v EN/DE verzi (Kč za 1 €). Živý kurz se načítá z ECB (src/i18n/index.tsx).
 export const EUR_RATE = 24.8;
 
 export const HIGHLIGHT_IDS = ['fence', 'users', 'flame', 'trees', 'fish', 'paw'] as const;

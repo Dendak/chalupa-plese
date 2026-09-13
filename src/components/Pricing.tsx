@@ -5,7 +5,7 @@ import { PRICING } from '@/data/site';
 import { useI18n } from '@/i18n';
 
 export function Pricing() {
-  const { t, czk, eur } = useI18n();
+  const { t, czk, eur, rate, rateDate } = useI18n();
   const p = t.pricing;
   return (
     <section id="cenik" className="container-x py-24 sm:py-32">
@@ -54,7 +54,12 @@ export function Pricing() {
             <span className="chip">{p.deposit}</span>
             <span className="chip">{p.caution}</span>
           </div>
-          {p.eurNote && <p className="mt-4 text-xs text-ink-muted">{p.eurNote}</p>}
+          {p.eurNote && (
+            <p className="mt-4 text-xs text-ink-muted">
+              {p.eurNote}
+              {rateDate && ` ${p.rateNote(rate.toLocaleString(t.intl, { maximumFractionDigits: 2 }), new Date(rateDate).toLocaleDateString(t.intl))}`}
+            </p>
+          )}
         </Reveal>
 
         <Reveal className="card divide-y divide-line p-2 sm:p-4" delay={0.1}>

@@ -200,7 +200,8 @@ export const de: Dict = {
     minNights: (n) => `Min. ${n} Nächte`,
     deposit: '50 % Anzahlung zur Bestätigung der Buchung',
     caution: '5.000 CZK Kaution bei Anreise (wird zurückerstattet)',
-    eurNote: 'Europreise sind Richtwerte; abgerechnet wird in tschechischen Kronen (CZK).',
+    eurNote: 'Europreise sind Richtwerte, aufgerundet auf volle 10 €; abgerechnet wird in tschechischen Kronen (CZK).',
+    rateNote: (rate, date) => `EZB-Referenzkurs ${rate} CZK/EUR vom ${date}.`,
     terms: [
       { q: 'Wie laufen Buchung und Bezahlung ab?', a: 'Zur Bestätigung der Buchung bitten wir um eine Anzahlung von 50 %. Der Restbetrag ist bei Sommer, Weihnachten und Silvester einen Monat vor der Anreise fällig, bei anderen Aufenthalten vorab oder bar bei der Anreise. Bei der Anreise erheben wir eine Kaution von 5.000 CZK, die Sie zurückbekommen.' },
       { q: 'Wie sind die Stornobedingungen?', a: 'Bei Stornierung mehr als 30 Tage vor der Anreise entstehen keine Kosten, die Anzahlung wird vollständig erstattet. Bei Stornierung weniger als 30 Tage vor der Anreise wird die Anzahlung nicht erstattet.' },

@@ -200,6 +200,7 @@ export const cs = {
     deposit: '50 % zálohy pro potvrzení rezervace',
     caution: '5 000 Kč vratná kauce při příjezdu',
     eurNote: '',
+    rateNote: (_rate: string, _date: string) => '',
     terms: [
       { q: 'Jak probíhá rezervace a platba?', a: 'Pro potvrzení rezervace požadujeme zálohu 50 % z ceny. Doplatek u letní sezóny, Vánoc a Silvestra měsíc před příjezdem, u ostatních pobytů předem nebo v hotovosti při příjezdu. Při příjezdu vybíráme vratnou kauci 5 000 Kč.' },
       { q: 'Jaké jsou storno podmínky?', a: 'Při zrušení pobytu více než 30 dní před příjezdem je storno bez poplatku a záloha se vrací v plné výši. Při zrušení méně než 30 dní před příjezdem se záloha nevrací.' },
