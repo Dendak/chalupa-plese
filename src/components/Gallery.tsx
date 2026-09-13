@@ -94,7 +94,7 @@ function Carousel({ photos, onOpen }: { photos: Photo[]; onOpen: (p: Photo) => v
   const g = t.gallery;
   return (
     <div className="container-x">
-      <Rail label={g.region} prevLabel={g.prevPhotos} nextLabel={g.nextPhotos} className="mt-6" padClass="px-1 py-2 gap-3">
+      <Rail label={g.region} prevLabel={g.prevPhotos} nextLabel={g.nextPhotos} className="mt-6" padClass="px-1 py-2 gap-3" autoplay={28}>
         {photos.map((p) => (
           <button
             key={p.id}
