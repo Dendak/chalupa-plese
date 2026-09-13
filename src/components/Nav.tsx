@@ -16,14 +16,37 @@ const LINKS: { href: string; key: 'chalupa' | 'galerie' | 'vybaveni' | 'cenik' |
 
 const SHORT: Record<Lang, string> = { cs: 'CZ', en: 'EN', de: 'DE' };
 
+const mq = () => window.matchMedia('(prefers-color-scheme: dark)');
+
+/** Tmavý režim: výchozí podle zařízení (sleduje i změny za běhu). Ruční volba se uloží;
+ *  když uživatel přepne zpět na to, co má zařízení, uložená volba se zahodí a web se dál řídí zařízením. */
 function useTheme() {
   const [dark, setDark] = useState(() => document.documentElement.classList.contains('dark'));
+
+  useEffect(() => {
+    const m = mq();
+    const onChange = (e: MediaQueryListEvent) => {
+      let stored: string | null = null;
+      try {
+        stored = localStorage.getItem('theme');
+      } catch {
+        /* ignore */
+      }
+      if (stored) return; // ruční volba má přednost
+      setDark(e.matches);
+      document.documentElement.classList.toggle('dark', e.matches);
+    };
+    m.addEventListener('change', onChange);
+    return () => m.removeEventListener('change', onChange);
+  }, []);
+
   const toggle = () => {
     const next = !dark;
     setDark(next);
     document.documentElement.classList.toggle('dark', next);
     try {
-      localStorage.setItem('theme', next ? 'dark' : 'light');
+      if (next === mq().matches) localStorage.removeItem('theme');
+      else localStorage.setItem('theme', next ? 'dark' : 'light');
     } catch {
       /* ignore */
     }
