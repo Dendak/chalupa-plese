@@ -13,13 +13,22 @@ Moderní jednostránkový web pro pronájem chalupy v Pleších (Jižní Čechy)
 - **sharp** (generování WebP/AVIF variant fotek + LQIP placeholdery)
 - Nativní `<dialog>` lightbox s `@starting-style`, `<picture>` s AVIF/WebP, lazy YouTube shorts
 
+## Jazyky
+
+Web je česky, anglicky a německy. Přepínač je v navigaci, jazyk se pozná i z prohlížeče
+nebo z URL (`?lang=en`, `?lang=de`) a pamatuje se v prohlížeči.
+Všechny texty jsou v `src/i18n/cs.ts`, `en.ts`, `de.ts` (stejná struktura, TypeScript hlídá,
+aby nic nechybělo). Vybrané recenze mají překlad přímo v `src/data/reviews.ts` (`en`, `de`).
+Orientační přepočet na eura řídí `EUR_RATE` v `src/data/site.ts`.
+
 ## Co upravovat
 
 | Co                           | Kde                                  |
 | ---------------------------- | ------------------------------------ |
 | Obsazenost (termíny)         | `src/data/bookings.ts`               |
-| Ceník, texty, kontakty, POI  | `src/data/site.ts`                   |
-| Kategorie a popisky fotek    | `src/data/photos.ts`                 |
+| Ceny, kontakty, souřadnice   | `src/data/site.ts`                   |
+| Texty (CZ/EN/DE)             | `src/i18n/cs.ts`, `en.ts`, `de.ts`   |
+| Kategorie fotek              | `src/data/photos.ts` (popisky v i18n)|
 | Originální fotky             | `photos-src/NN-nazev.jpg`            |
 | Odesílání formuláře          | `FORM.accessKey` v `src/data/site.ts` |
 

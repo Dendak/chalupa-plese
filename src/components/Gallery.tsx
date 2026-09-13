@@ -3,13 +3,16 @@ import clsx from 'clsx';
 import { ChevronLeft, ChevronRight, X, Images } from 'lucide-react';
 import { Picture, srcSet, srcOf } from './Picture';
 import { Reveal, SectionHeading } from './Reveal';
-import { CATEGORIES, PHOTOS, type Photo, type PhotoCategory } from '@/data/photos';
+import { CATEGORY_IDS, PHOTOS, type Photo, type PhotoCategory } from '@/data/photos';
+import { useI18n } from '@/i18n';
 
 // Mozaika nahoře: 1 velká + 4 malé (id fotek)
 const MOSAIC = ['15', '29', '09', '35', '38'];
 const ROW_H = 'h-[220px] sm:h-[260px] lg:h-[300px]';
 
 export function Gallery() {
+  const { t } = useI18n();
+  const g = t.gallery;
   const [cat, setCat] = useState<PhotoCategory | 'vse'>('vse');
   const [lightbox, setLightbox] = useState<{ list: Photo[]; index: number } | null>(null);
 
@@ -20,7 +23,7 @@ export function Gallery() {
   return (
     <section id="galerie" className="bg-surface/60 py-24 sm:py-32">
       <div className="container-x">
-        <SectionHeading eyebrow="Galerie" title="Podívejte se dovnitř i ven." text={`${PHOTOS.length} fotografií chalupy, zahrady a okolí. Klikněte na kteroukoliv.`} />
+        <SectionHeading eyebrow={g.eyebrow} title={g.title} text={g.text(PHOTOS.length)} />
 
         {/* Mozaika */}
         <Reveal className="relative mt-10">
@@ -29,7 +32,7 @@ export function Gallery() {
               <button
                 key={p.id}
                 onClick={() => open(PHOTOS, p)}
-                aria-label={`Otevřít fotku: ${p.caption}`}
+                aria-label={g.open(g.captions[p.id])}
                 className={clsx(
                   'group relative overflow-hidden rounded-2xl shadow-soft outline-offset-4',
                   i === 0 ? 'col-span-2 row-span-2 aspect-[4/3] sm:aspect-auto' : 'aspect-[4/3] sm:aspect-auto',
@@ -51,25 +54,26 @@ export function Gallery() {
             onClick={() => open(PHOTOS, mosaic[0])}
             className="btn absolute bottom-4 right-4 border border-white/40 bg-white/85 text-ink shadow-lifted backdrop-blur-md hover:bg-white dark:bg-black/60 dark:text-white dark:hover:bg-black/80"
           >
-            <Images className="size-4" /> Zobrazit všech {PHOTOS.length} fotek
+            <Images className="size-4" /> {g.showAll(PHOTOS.length)}
           </button>
         </Reveal>
 
         {/* Kategorie + karusel */}
         <Reveal className="mt-12 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-          <h3 className="font-display text-2xl font-medium">Podle místností</h3>
+          <h3 className="font-display text-2xl font-medium">{g.byRoom}</h3>
           <div className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5 sm:mx-0 sm:px-0">
-            {CATEGORIES.map((c) => (
+            {CATEGORY_IDS.map((c) => (
               <button
-                key={c.id}
-                onClick={() => setCat(c.id)}
+                key={c}
+                onClick={() => setCat(c)}
+                aria-pressed={cat === c}
                 className={clsx(
                   'shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-all',
-                  cat === c.id ? 'border-forest bg-forest text-white shadow-soft dark:text-bg' : 'border-line bg-bg-elevated text-ink hover:bg-surface-strong',
+                  cat === c ? 'border-forest bg-forest text-white shadow-soft dark:text-bg' : 'border-line bg-bg-elevated text-ink hover:bg-surface-strong',
                 )}
               >
-                {c.label}
-                <span className={clsx('ml-1.5 text-xs', cat === c.id ? 'opacity-70' : 'text-ink-muted')}>{c.id === 'vse' ? PHOTOS.length : PHOTOS.filter((p) => p.cat === c.id).length}</span>
+                {g.categories[c]}
+                <span className={clsx('ml-1.5 text-xs', cat === c ? 'opacity-70' : 'text-ink-muted')}>{c === 'vse' ? PHOTOS.length : PHOTOS.filter((p) => p.cat === c).length}</span>
               </button>
             ))}
           </div>
@@ -85,6 +89,8 @@ export function Gallery() {
 
 /** Filmový pás: jednotná výška, šířka podle poměru stran, scroll-snap, šipky. */
 function Carousel({ photos, onOpen }: { photos: Photo[]; onOpen: (p: Photo) => void }) {
+  const { t } = useI18n();
+  const g = t.gallery;
   const ref = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
   const [atStart, setAtStart] = useState(true);
@@ -118,20 +124,22 @@ function Carousel({ photos, onOpen }: { photos: Photo[]; onOpen: (p: Photo) => v
     <div className="relative mt-6">
       <div
         ref={ref}
-        role="region" aria-label="Fotografie – posuvný pás" className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth px-5 pb-2 sm:px-8 lg:px-[max(2rem,calc((100vw-80rem)/2+2rem))]"
+        role="region"
+        aria-label={g.region}
+        className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth px-5 pb-2 sm:px-8 lg:px-[max(2rem,calc((100vw-80rem)/2+2rem))]"
         style={{ scrollPaddingInline: 'max(2rem, calc((100vw - 80rem) / 2 + 2rem))' }}
       >
         {photos.map((p) => (
           <button
             key={p.id}
             onClick={() => onOpen(p)}
-            aria-label={`Otevřít fotku: ${p.caption}`}
+            aria-label={g.open(g.captions[p.id])}
             className={clsx('group relative shrink-0 snap-start overflow-hidden rounded-2xl shadow-soft outline-offset-4', ROW_H)}
             style={{ aspectRatio: `${p.width} / ${p.height}` }}
           >
             <Picture photo={p} sizes="(min-width:1024px) 420px, 320px" className="h-full w-full" imgClassName="transition-transform duration-[1.2s] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-105" alt="" />
             <span className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-            <span className="absolute inset-x-0 bottom-0 p-4 text-left text-sm font-medium text-white opacity-0 transition-opacity duration-500 group-hover:opacity-100">{p.caption}</span>
+            <span className="absolute inset-x-0 bottom-0 p-4 text-left text-sm font-medium text-white opacity-0 transition-opacity duration-500 group-hover:opacity-100">{g.captions[p.id]}</span>
           </button>
         ))}
       </div>
@@ -141,10 +149,10 @@ function Carousel({ photos, onOpen }: { photos: Photo[]; onOpen: (p: Photo) => v
           <div className="h-full rounded-full bg-forest transition-[width] duration-150" style={{ width: `${Math.max(8, progress * 100)}%` }} />
         </div>
         <div className="flex gap-2">
-          <button onClick={() => scrollBy(-1)} disabled={atStart} aria-label="Předchozí fotky" className="grid size-11 place-items-center rounded-full border border-line bg-bg-elevated shadow-soft transition hover:bg-surface disabled:opacity-30">
+          <button onClick={() => scrollBy(-1)} disabled={atStart} aria-label={g.prevPhotos} className="grid size-11 place-items-center rounded-full border border-line bg-bg-elevated shadow-soft transition hover:bg-surface disabled:opacity-30">
             <ChevronLeft className="size-5" />
           </button>
-          <button onClick={() => scrollBy(1)} disabled={atEnd} aria-label="Další fotky" className="grid size-11 place-items-center rounded-full border border-line bg-bg-elevated shadow-soft transition hover:bg-surface disabled:opacity-30">
+          <button onClick={() => scrollBy(1)} disabled={atEnd} aria-label={g.nextPhotos} className="grid size-11 place-items-center rounded-full border border-line bg-bg-elevated shadow-soft transition hover:bg-surface disabled:opacity-30">
             <ChevronRight className="size-5" />
           </button>
         </div>
@@ -154,6 +162,8 @@ function Carousel({ photos, onOpen }: { photos: Photo[]; onOpen: (p: Photo) => v
 }
 
 function Lightbox({ state, onClose, onChange }: { state: { list: Photo[]; index: number } | null; onClose: () => void; onChange: (i: number) => void }) {
+  const { t } = useI18n();
+  const g = t.gallery;
   const ref = useRef<HTMLDialogElement>(null);
   const stripRef = useRef<HTMLDivElement>(null);
   const open = state !== null;
@@ -186,7 +196,7 @@ function Lightbox({ state, onClose, onChange }: { state: { list: Photo[]; index:
   }, [index]);
 
   const touch = useRef<number | null>(null);
-  const catLabel = photo ? CATEGORIES.find((c) => c.id === photo.cat)?.label : '';
+  const catLabel = photo ? g.categories[photo.cat] : '';
 
   return (
     <dialog
@@ -210,7 +220,7 @@ function Lightbox({ state, onClose, onChange }: { state: { list: Photo[]; index:
               <span className="font-semibold text-white">{index + 1}</span> / {photos.length}
               {catLabel && <span className="ml-3 rounded-full bg-white/10 px-2.5 py-1 text-xs">{catLabel}</span>}
             </p>
-            <button onClick={onClose} aria-label="Zavřít" className="grid size-11 place-items-center rounded-full bg-white/10 hover:bg-white/20">
+            <button onClick={onClose} aria-label={g.close} className="grid size-11 place-items-center rounded-full bg-white/10 hover:bg-white/20">
               <X className="size-5" />
             </button>
           </div>
@@ -218,23 +228,23 @@ function Lightbox({ state, onClose, onChange }: { state: { list: Photo[]; index:
             <picture key={photo.id} className="contents">
               {photo.avif.length > 0 && <source type="image/avif" srcSet={srcSet(photo, 'avif')} sizes="100vw" />}
               <source type="image/webp" srcSet={srcSet(photo, 'webp')} sizes="100vw" />
-              <img src={srcOf(photo)} width={photo.width} height={photo.height} alt={photo.caption} decoding="async" className="max-h-full max-w-full rounded-xl object-contain shadow-lifted" />
+              <img src={srcOf(photo)} width={photo.width} height={photo.height} alt={g.captions[photo.id]} decoding="async" className="max-h-full max-w-full rounded-xl object-contain shadow-lifted" />
             </picture>
-            <button onClick={prev} aria-label="Předchozí" className="absolute left-2 top-1/2 hidden size-12 -translate-y-1/2 place-items-center rounded-full bg-white/10 hover:bg-white/20 sm:grid">
+            <button onClick={prev} aria-label={g.prev} className="absolute left-2 top-1/2 hidden size-12 -translate-y-1/2 place-items-center rounded-full bg-white/10 hover:bg-white/20 sm:grid">
               <ChevronLeft className="size-6" />
             </button>
-            <button onClick={next} aria-label="Další" className="absolute right-2 top-1/2 hidden size-12 -translate-y-1/2 place-items-center rounded-full bg-white/10 hover:bg-white/20 sm:grid">
+            <button onClick={next} aria-label={g.next} className="absolute right-2 top-1/2 hidden size-12 -translate-y-1/2 place-items-center rounded-full bg-white/10 hover:bg-white/20 sm:grid">
               <ChevronRight className="size-6" />
             </button>
           </div>
-          <p className="px-6 pt-3 text-center text-sm text-white/85">{photo.caption}</p>
+          <p className="px-6 pt-3 text-center text-sm text-white/85">{g.captions[photo.id]}</p>
           <div ref={stripRef} className="no-scrollbar flex gap-1.5 overflow-x-auto px-4 py-3 sm:justify-center sm:px-6">
             {photos.map((p, i) => (
               <button
                 key={p.id}
                 data-i={i}
                 onClick={() => onChange(i)}
-                aria-label={`Fotka ${i + 1}`}
+                aria-label={g.photo(i + 1)}
                 className={clsx('h-12 w-16 shrink-0 overflow-hidden rounded-md transition-all sm:h-14 sm:w-20', i === index ? 'ring-2 ring-gold opacity-100' : 'opacity-50 hover:opacity-90')}
               >
                 <img src={srcOf(p, 480)} alt="" loading="lazy" className="h-full w-full object-cover" />

@@ -2,18 +2,19 @@ import { useMemo, useState } from 'react';
 import clsx from 'clsx';
 import { ChevronLeft, ChevronRight, CalendarCheck, Info } from 'lucide-react';
 import { addMonths, eachDayOfInterval, endOfMonth, format, getDay, isBefore, startOfDay, startOfMonth } from 'date-fns';
-import { cs } from 'date-fns/locale';
 import { Reveal, SectionHeading } from './Reveal';
-import { dayStatus, estimate, czk, fromKey, isSummer, nightOccupied, rangeIsFree, toKey } from '@/lib/dates';
+import { dayStatus, estimate, fromKey, isSummer, nightOccupied, rangeIsFree, toKey } from '@/lib/dates';
+import { useI18n } from '@/i18n';
 
 export interface Selection {
   from: string | null;
   to: string | null;
 }
 
-const WEEKDAYS = ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'];
-
 export function Calendar({ selection, onSelect }: { selection: Selection; onSelect: (s: Selection) => void }) {
+  const { t, czk, eur } = useI18n();
+  const c = t.calendar;
+  const loc = { locale: t.dateLocale };
   const today = startOfDay(new Date());
   const [month, setMonth] = useState(startOfMonth(today));
   const [hover, setHover] = useState<string | null>(null);
@@ -26,19 +27,18 @@ export function Calendar({ selection, onSelect }: { selection: Selection; onSele
     const { from, to } = selection;
     if (!from || (from && to)) {
       if (nightOccupied(key)) {
-        setError('Tento den je obsazený – vyberte jiný den příjezdu.');
+        setError(c.errors.bookedStart);
         return;
       }
       onSelect({ from: key, to: null });
       return;
     }
-    // vybíráme odjezd
     if (key <= from) {
       onSelect({ from: key, to: null });
       return;
     }
     if (!rangeIsFree(from, key)) {
-      setError('Ve vybraném rozmezí je obsazený termín. Zkuste kratší pobyt.');
+      setError(c.errors.rangeBooked);
       return;
     }
     onSelect({ from, to: key });
@@ -46,11 +46,13 @@ export function Calendar({ selection, onSelect }: { selection: Selection; onSele
 
   const previewTo = selection.from && !selection.to && hover && hover > selection.from ? hover : selection.to;
   const est = useMemo(() => (selection.from && selection.to ? estimate(selection.from, selection.to) : null), [selection]);
+  const fmtDay = (k: string) => format(fromKey(k), 'd. M.', loc);
+  const fmtDate = (k: string) => format(fromKey(k), 'd. M. yyyy', loc);
 
   return (
     <section id="obsazenost" className="bg-surface/60 py-24 sm:py-32">
       <div className="container-x">
-        <SectionHeading eyebrow="Obsazenost" title="Vyberte si termín." text="Klikněte na den příjezdu a poté na den odjezdu. Vybraný termín se propíše do poptávky níže." />
+        <SectionHeading eyebrow={c.eyebrow} title={c.title} text={c.text} />
 
         <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_340px]">
           <Reveal className="card p-4 sm:p-6">
@@ -59,14 +61,14 @@ export function Calendar({ selection, onSelect }: { selection: Selection; onSele
                 onClick={() => setMonth((m) => addMonths(m, -1))}
                 disabled={!isBefore(startOfMonth(today), month)}
                 className="grid size-10 place-items-center rounded-full border border-line hover:bg-surface disabled:opacity-30"
-                aria-label="Předchozí měsíc"
+                aria-label={c.prevMonth}
               >
                 <ChevronLeft className="size-5" />
               </button>
               <p className="font-display text-xl font-medium capitalize">
-                {format(months[0], 'LLLL yyyy', { locale: cs })} <span className="hidden text-ink-muted sm:inline">– {format(months[1], 'LLLL yyyy', { locale: cs })}</span>
+                {format(months[0], 'LLLL yyyy', loc)} <span className="hidden text-ink-muted sm:inline">– {format(months[1], 'LLLL yyyy', loc)}</span>
               </p>
-              <button onClick={() => setMonth((m) => addMonths(m, 1))} className="grid size-10 place-items-center rounded-full border border-line hover:bg-surface" aria-label="Další měsíc">
+              <button onClick={() => setMonth((m) => addMonths(m, 1))} className="grid size-10 place-items-center rounded-full border border-line hover:bg-surface" aria-label={c.nextMonth}>
                 <ChevronRight className="size-5" />
               </button>
             </div>
@@ -74,17 +76,17 @@ export function Calendar({ selection, onSelect }: { selection: Selection; onSele
             <p className="mt-4 rounded-xl bg-surface px-4 py-2 text-center text-sm" aria-live="polite">
               {!selection.from && (
                 <>
-                  <span className="font-semibold text-forest">Krok 1:</span> klikněte na den příjezdu
+                  <span className="font-semibold text-forest">{c.step1}</span> {c.step1text}
                 </>
               )}
               {selection.from && !selection.to && (
                 <>
-                  <span className="font-semibold text-forest">Krok 2:</span> teď vyberte den odjezdu
+                  <span className="font-semibold text-forest">{c.step2}</span> {c.step2text}
                 </>
               )}
               {selection.from && selection.to && (
                 <>
-                  <span className="font-semibold text-forest">Vybráno:</span> {format(fromKey(selection.from), 'd. M.')} – {format(fromKey(selection.to), 'd. M. yyyy')}
+                  <span className="font-semibold text-forest">{c.selected}</span> {fmtDay(selection.from)} – {fmtDate(selection.to)}
                 </>
               )}
             </p>
@@ -93,7 +95,7 @@ export function Calendar({ selection, onSelect }: { selection: Selection; onSele
               {months.map((m, mi) => (
                 <div key={m.toISOString()} className={clsx(mi === 1 && 'hidden sm:block')}>
                   <div className="grid grid-cols-7 gap-1 text-center text-xs font-semibold uppercase tracking-wider text-ink-muted">
-                    {WEEKDAYS.map((w) => (
+                    {c.weekdays.map((w) => (
                       <span key={w} className="py-1">
                         {w}
                       </span>
@@ -118,7 +120,7 @@ export function Calendar({ selection, onSelect }: { selection: Selection; onSele
                           onClick={() => handleClick(key)}
                           onMouseEnter={() => setHover(key)}
                           onMouseLeave={() => setHover(null)}
-                          title={status !== 'free' ? 'Obsazeno' : summer ? 'Letní sezóna (týdenní pobyty so–so)' : 'Volno'}
+                          title={status !== 'free' ? c.tips.booked : summer ? c.tips.summer : c.tips.free}
                           className={clsx(
                             'relative aspect-square rounded-lg text-sm font-medium transition-all duration-200',
                             past && 'text-ink-muted/40',
@@ -141,10 +143,10 @@ export function Calendar({ selection, onSelect }: { selection: Selection; onSele
             </div>
 
             <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 border-t border-line pt-4 text-xs text-ink-muted">
-              <span className="flex items-center gap-2"><span className="size-3.5 rounded bg-forest-soft ring-1 ring-line" /> Volno</span>
-              <span className="flex items-center gap-2"><span className="day-booked size-3.5 rounded" /> Obsazeno</span>
-              <span className="flex items-center gap-2"><span className="day-arrival size-3.5 rounded ring-1 ring-line" /> Příjezd / odjezd</span>
-              <span className="flex items-center gap-2"><span className="size-1.5 rounded-full bg-gold" /> Letní sezóna – týdny so–so</span>
+              <span className="flex items-center gap-2"><span className="size-3.5 rounded bg-forest-soft ring-1 ring-line" /> {c.legend.free}</span>
+              <span className="flex items-center gap-2"><span className="day-booked size-3.5 rounded" /> {c.legend.booked}</span>
+              <span className="flex items-center gap-2"><span className="day-arrival size-3.5 rounded ring-1 ring-line" /> {c.legend.arrival}</span>
+              <span className="flex items-center gap-2"><span className="size-1.5 rounded-full bg-gold" /> {c.legend.summer}</span>
             </div>
             {error && <p role="alert" className="mt-3 rounded-xl bg-terracotta-soft px-4 py-2.5 text-sm text-terracotta">{error}</p>}
           </Reveal>
@@ -154,49 +156,48 @@ export function Calendar({ selection, onSelect }: { selection: Selection; onSele
               <span className="grid size-11 place-items-center rounded-2xl bg-forest-soft text-forest">
                 <CalendarCheck className="size-5" />
               </span>
-              <h3 className="text-lg font-semibold">Váš termín</h3>
+              <h3 className="text-lg font-semibold">{c.yourDates}</h3>
             </div>
             <dl className="mt-6 grid grid-cols-2 gap-3">
               <div className="rounded-2xl bg-surface p-4">
-                <dt className="text-xs font-semibold uppercase tracking-wider text-ink-muted">Příjezd</dt>
-                <dd className="mt-1 font-display text-xl font-medium">{selection.from ? format(fromKey(selection.from), 'd. M. yyyy') : '–'}</dd>
+                <dt className="text-xs font-semibold uppercase tracking-wider text-ink-muted">{c.arrival}</dt>
+                <dd className="mt-1 font-display text-xl font-medium">{selection.from ? fmtDate(selection.from) : '–'}</dd>
               </div>
               <div className="rounded-2xl bg-surface p-4">
-                <dt className="text-xs font-semibold uppercase tracking-wider text-ink-muted">Odjezd</dt>
-                <dd className="mt-1 font-display text-xl font-medium">{selection.to ? format(fromKey(selection.to), 'd. M. yyyy') : '–'}</dd>
+                <dt className="text-xs font-semibold uppercase tracking-wider text-ink-muted">{c.departure}</dt>
+                <dd className="mt-1 font-display text-xl font-medium">{selection.to ? fmtDate(selection.to) : '–'}</dd>
               </div>
             </dl>
             {est ? (
               <div className="mt-4 rounded-2xl border border-line p-4">
                 <p className="text-sm text-ink-muted">
-                  {est.nights} {est.nights === 1 ? 'noc' : est.nights < 5 ? 'noci' : 'nocí'} · {est.label}
+                  {c.nights(est.nights)} · {c.labels[est.label]}
                 </p>
-                <p className="mt-1 font-display text-3xl font-medium text-forest">{est.price ? czk(est.price) : 'Cena na dotaz'}</p>
+                <p className="mt-1 font-display text-3xl font-medium text-forest">{est.price ? czk(est.price) : c.onRequest}</p>
+                {est.price && eur(est.price) && <p className="text-sm font-medium text-ink-muted">≈ {eur(est.price)}</p>}
                 {est.hint && (
                   <p className="mt-2 flex items-start gap-2 text-xs leading-relaxed text-ink-muted">
-                    <Info className="mt-0.5 size-3.5 shrink-0" /> {est.hint}
+                    <Info className="mt-0.5 size-3.5 shrink-0" /> {c.hints[est.hint]}
                   </p>
                 )}
-                <p className="mt-2 text-xs text-ink-muted">Orientační cena podle ceníku, potvrdíme v odpovědi na poptávku.</p>
+                <p className="mt-2 text-xs text-ink-muted">{c.orientation}</p>
               </div>
             ) : (
-              <p className="mt-4 text-sm leading-relaxed text-ink-muted">
-                {selection.from ? 'Teď vyberte den odjezdu.' : 'Zatím nemáte vybraný termín. Klikněte v kalendáři na den příjezdu.'}
-              </p>
+              <p className="mt-4 text-sm leading-relaxed text-ink-muted">{selection.from ? c.promptEnd : c.promptStart}</p>
             )}
             <div className="mt-auto pt-6">
               {selection.to ? (
                 <a href="#poptavka" className="btn-accent w-full">
-                  Poptat tento termín
+                  {c.askFor}
                 </a>
               ) : (
                 <span aria-disabled="true" className="btn-ghost w-full cursor-not-allowed text-ink-muted">
-                  Nejdřív vyberte termín
+                  {c.chooseFirst}
                 </span>
               )}
               {selection.from && (
                 <button onClick={() => onSelect({ from: null, to: null })} className="mt-2 w-full text-center text-xs text-ink-muted underline-offset-2 hover:underline">
-                  Zrušit výběr
+                  {c.clear}
                 </button>
               )}
             </div>

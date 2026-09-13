@@ -5,11 +5,14 @@ import { format } from 'date-fns';
 import { Reveal, SectionHeading } from './Reveal';
 import { FORM, OWNER, SITE } from '@/data/site';
 import type { Selection } from './Calendar';
-import { estimate, czk, fromKey } from '@/lib/dates';
+import { estimate, fromKey } from '@/lib/dates';
+import { useI18n } from '@/i18n';
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
 export function Inquiry({ selection, onSelect }: { selection: Selection; onSelect: (s: Selection) => void }) {
+  const { t, lang, czk } = useI18n();
+  const q = t.inquiry;
   const [status, setStatus] = useState<Status>('idle');
   const est = selection.from && selection.to ? estimate(selection.from, selection.to) : null;
 
@@ -19,23 +22,24 @@ export function Inquiry({ selection, onSelect }: { selection: Selection; onSelec
     const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
     if (data.website) return; // honeypot
 
+    const m = q.mail;
     const lines = [
-      `Poptávka z webu ${SITE.name}`,
+      `${m.header} ${SITE.name} (${lang.toUpperCase()})`,
       '',
-      `Příjezd: ${data.from || '–'}`,
-      `Odjezd: ${data.to || '–'}`,
-      `Počet osob: ${data.persons}`,
-      `Pejsek: ${data.pets ? 'ano' : 'ne'}`,
+      `${m.from}: ${data.from || '–'}`,
+      `${m.to}: ${data.to || '–'}`,
+      `${m.persons}: ${data.persons}`,
+      `${m.pets}: ${data.pets ? m.yes : m.no}`,
       '',
-      `Jméno: ${data.name}`,
-      `E-mail: ${data.email}`,
-      `Telefon: ${data.phone}`,
+      `${m.name}: ${data.name}`,
+      `${m.email}: ${data.email}`,
+      `${m.phone}: ${data.phone}`,
       '',
       data.message,
     ];
 
     if (!FORM.accessKey) {
-      window.location.href = `mailto:${OWNER.email}?subject=${encodeURIComponent(`Poptávka termínu ${data.from || ''} – ${data.to || ''}`)}&body=${encodeURIComponent(lines.join('\n'))}`;
+      window.location.href = `mailto:${OWNER.email}?subject=${encodeURIComponent(m.subject(data.from || '', data.to || ''))}&body=${encodeURIComponent(lines.join('\n'))}`;
       setStatus('sent');
       return;
     }
@@ -47,9 +51,10 @@ export function Inquiry({ selection, onSelect }: { selection: Selection; onSelec
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
           access_key: FORM.accessKey,
-          subject: `Poptávka termínu ${data.from} – ${data.to} (${data.name})`,
+          subject: `${m.subject(data.from, data.to)} (${data.name})`,
           from_name: SITE.name,
           ...data,
+          language: lang,
           message: lines.join('\n'),
         }),
       });
@@ -68,14 +73,14 @@ export function Inquiry({ selection, onSelect }: { selection: Selection; onSelec
     <section id="poptavka" className="container-x py-24 sm:py-32">
       <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
         <div>
-          <SectionHeading eyebrow="Poptávka" title="Napište nám. Odpovídáme rychle." text="Nezávazně poptejte termín. Ozveme se s potvrzením dostupnosti a přesnou cenou, obvykle do 24 hodin." />
+          <SectionHeading eyebrow={q.eyebrow} title={q.title} text={q.text} />
           <Reveal delay={0.1} className="mt-10 space-y-4">
             <a href={`tel:${OWNER.phone.replace(/\s/g, '')}`} className="card flex items-center gap-4 p-5 transition-transform hover:-translate-y-0.5">
               <span className="grid size-11 place-items-center rounded-2xl bg-forest-soft text-forest">
                 <Phone className="size-5" />
               </span>
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-ink-muted">Telefon</p>
+                <p className="text-xs font-semibold uppercase tracking-wider text-ink-muted">{q.phone}</p>
                 <p className="font-semibold">{OWNER.phone}</p>
               </div>
             </a>
@@ -84,12 +89,12 @@ export function Inquiry({ selection, onSelect }: { selection: Selection; onSelec
                 <Mail className="size-5" />
               </span>
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-ink-muted">E-mail</p>
+                <p className="text-xs font-semibold uppercase tracking-wider text-ink-muted">{q.email}</p>
                 <p className="font-semibold">{OWNER.email}</p>
               </div>
             </a>
             <p className="text-sm leading-relaxed text-ink-muted">
-              {OWNER.name} · {OWNER.address.street}, {OWNER.address.zip} {OWNER.address.city}. Ověřený majitel na e-chalupy.cz, jsme plátci DPH a vystavujeme faktury.
+              {OWNER.name} · {OWNER.address.street}, {OWNER.address.zip} {OWNER.address.city}. {q.ownerLine}
             </p>
           </Reveal>
         </div>
@@ -98,12 +103,10 @@ export function Inquiry({ selection, onSelect }: { selection: Selection; onSelec
           {status === 'sent' ? (
             <div className="card flex h-full flex-col items-center justify-center p-10 text-center">
               <CheckCircle2 className="size-14 text-moss" />
-              <h3 className="mt-5 text-2xl font-semibold">Děkujeme za poptávku!</h3>
-              <p className="mt-2 max-w-sm text-ink-muted">
-                {FORM.accessKey ? 'Ozveme se vám co nejdříve s potvrzením termínu.' : 'Otevřel se váš e-mailový klient s předvyplněnou zprávou – stačí odeslat.'}
-              </p>
+              <h3 className="mt-5 text-2xl font-semibold">{q.successTitle}</h3>
+              <p className="mt-2 max-w-sm text-ink-muted">{FORM.accessKey ? q.successKey : q.successMail}</p>
               <button onClick={() => setStatus('idle')} className="btn-ghost mt-8">
-                Poslat další poptávku
+                {q.sendAnother}
               </button>
             </div>
           ) : (
@@ -111,58 +114,59 @@ export function Inquiry({ selection, onSelect }: { selection: Selection; onSelec
               <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <label htmlFor="from" className={label}>Příjezd</label>
+                  <label htmlFor="from" className={label}>{q.labels.from}</label>
                   <input id="from" name="from" type="date" required value={selection.from ?? ''} onChange={(e) => onSelect({ from: e.target.value || null, to: selection.to })} className={input} />
                 </div>
                 <div>
-                  <label htmlFor="to" className={label}>Odjezd</label>
+                  <label htmlFor="to" className={label}>{q.labels.to}</label>
                   <input id="to" name="to" type="date" required min={selection.from ?? undefined} value={selection.to ?? ''} onChange={(e) => onSelect({ from: selection.from, to: e.target.value || null })} className={input} />
                 </div>
                 <div>
-                  <label htmlFor="persons" className={label}>Počet osob</label>
+                  <label htmlFor="persons" className={label}>{q.labels.persons}</label>
                   <select id="persons" name="persons" defaultValue="8" className={input}>
                     {Array.from({ length: 8 }).map((_, i) => (
                       <option key={i} value={i + 1}>
-                        {i + 1} {i === 0 ? 'osoba' : i < 4 ? 'osoby' : 'osob'}
+                        {q.persons(i + 1)}
                       </option>
                     ))}
                   </select>
                 </div>
                 <div className="flex items-end">
                   <label className="flex w-full cursor-pointer items-center gap-3 rounded-2xl border border-line bg-bg-elevated px-4 py-3 text-sm">
-                    <input type="checkbox" name="pets" className="size-5 accent-[var(--forest)]" /> Přijedeme s pejskem
+                    <input type="checkbox" name="pets" className="size-5 accent-[var(--forest)]" /> {q.pets}
                   </label>
                 </div>
                 <div>
-                  <label htmlFor="name" className={label}>Jméno a příjmení</label>
-                  <input id="name" name="name" required autoComplete="name" placeholder="Jan Novák" className={input} />
+                  <label htmlFor="name" className={label}>{q.labels.name}</label>
+                  <input id="name" name="name" required autoComplete="name" placeholder={q.placeholders.name} className={input} />
                 </div>
                 <div>
-                  <label htmlFor="phone" className={label}>Telefon</label>
-                  <input id="phone" name="phone" type="tel" autoComplete="tel" placeholder="+420 …" className={input} />
+                  <label htmlFor="phone" className={label}>{q.labels.phone}</label>
+                  <input id="phone" name="phone" type="tel" autoComplete="tel" placeholder={q.placeholders.phone} className={input} />
                 </div>
                 <div className="sm:col-span-2">
-                  <label htmlFor="email" className={label}>E-mail</label>
-                  <input id="email" name="email" type="email" required autoComplete="email" placeholder="jan@email.cz" className={input} />
+                  <label htmlFor="email" className={label}>{q.labels.email}</label>
+                  <input id="email" name="email" type="email" required autoComplete="email" placeholder={q.placeholders.email} className={input} />
                 </div>
                 <div className="sm:col-span-2">
-                  <label htmlFor="message" className={label}>Zpráva</label>
-                  <textarea id="message" name="message" rows={4} placeholder="Kolik vás přijede, jestli máte děti, pejska, nebo cokoliv, co nám pomůže pobyt připravit…" className={input} />
+                  <label htmlFor="message" className={label}>{q.labels.message}</label>
+                  <textarea id="message" name="message" rows={4} placeholder={q.placeholders.message} className={input} />
                 </div>
               </div>
 
               {est && (
                 <p className="mt-4 rounded-2xl bg-forest-soft px-4 py-3 text-sm text-forest">
-                  {format(fromKey(selection.from!), 'd. M.')} – {format(fromKey(selection.to!), 'd. M. yyyy')} · {est.nights} nocí · {est.price ? `orientačně ${czk(est.price)}` : 'cena na dotaz'}
+                  {format(fromKey(selection.from!), 'd. M.', { locale: t.dateLocale })} – {format(fromKey(selection.to!), 'd. M. yyyy', { locale: t.dateLocale })} · {t.calendar.nights(est.nights)} ·{' '}
+                  {est.price ? `${q.approx} ${czk(est.price)}` : q.priceOnRequest}
                 </p>
               )}
-              {status === 'error' && <p role="alert" className="mt-4 rounded-2xl bg-terracotta-soft px-4 py-3 text-sm text-terracotta">Odeslání se nezdařilo. Zkuste to prosím znovu nebo nám zavolejte.</p>}
+              {status === 'error' && <p role="alert" className="mt-4 rounded-2xl bg-terracotta-soft px-4 py-3 text-sm text-terracotta">{q.error}</p>}
 
               <button type="submit" disabled={status === 'sending'} className={clsx('btn-accent mt-6 w-full py-3.5 text-base', status === 'sending' && 'opacity-70')}>
                 {status === 'sending' ? <Loader2 className="size-5 animate-spin" /> : <Send className="size-4" />}
-                Odeslat nezávaznou poptávku
+                {q.submit}
               </button>
-              <p className="mt-3 text-center text-xs text-ink-muted">Odesláním souhlasíte se zpracováním údajů pro účely vyřízení poptávky.</p>
+              <p className="mt-3 text-center text-xs text-ink-muted">{q.consent}</p>
             </form>
           )}
         </Reveal>
