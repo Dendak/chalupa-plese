@@ -71,10 +71,28 @@ export function Calendar({ selection, onSelect }: { selection: Selection; onSele
               </button>
             </div>
 
+            <p className="mt-4 rounded-xl bg-surface px-4 py-2 text-center text-sm" aria-live="polite">
+              {!selection.from && (
+                <>
+                  <span className="font-semibold text-forest">Krok 1:</span> klikněte na den příjezdu
+                </>
+              )}
+              {selection.from && !selection.to && (
+                <>
+                  <span className="font-semibold text-forest">Krok 2:</span> teď vyberte den odjezdu
+                </>
+              )}
+              {selection.from && selection.to && (
+                <>
+                  <span className="font-semibold text-forest">Vybráno:</span> {format(fromKey(selection.from), 'd. M.')} – {format(fromKey(selection.to), 'd. M. yyyy')}
+                </>
+              )}
+            </p>
+
             <div className="mt-6 grid gap-8 sm:grid-cols-2">
               {months.map((m, mi) => (
                 <div key={m.toISOString()} className={clsx(mi === 1 && 'hidden sm:block')}>
-                  <div className="grid grid-cols-7 gap-1 text-center text-[11px] font-semibold uppercase tracking-wider text-ink-muted">
+                  <div className="grid grid-cols-7 gap-1 text-center text-xs font-semibold uppercase tracking-wider text-ink-muted">
                     {WEEKDAYS.map((w) => (
                       <span key={w} className="py-1">
                         {w}
@@ -128,7 +146,7 @@ export function Calendar({ selection, onSelect }: { selection: Selection; onSele
               <span className="flex items-center gap-2"><span className="day-arrival size-3.5 rounded ring-1 ring-line" /> Příjezd / odjezd</span>
               <span className="flex items-center gap-2"><span className="size-1.5 rounded-full bg-gold" /> Letní sezóna – týdny so–so</span>
             </div>
-            {error && <p className="mt-3 rounded-xl bg-terracotta-soft px-4 py-2.5 text-sm text-terracotta">{error}</p>}
+            {error && <p role="alert" className="mt-3 rounded-xl bg-terracotta-soft px-4 py-2.5 text-sm text-terracotta">{error}</p>}
           </Reveal>
 
           <Reveal delay={0.1} className="card flex flex-col p-6">
@@ -140,11 +158,11 @@ export function Calendar({ selection, onSelect }: { selection: Selection; onSele
             </div>
             <dl className="mt-6 grid grid-cols-2 gap-3">
               <div className="rounded-2xl bg-surface p-4">
-                <dt className="text-[11px] font-semibold uppercase tracking-wider text-ink-muted">Příjezd</dt>
+                <dt className="text-xs font-semibold uppercase tracking-wider text-ink-muted">Příjezd</dt>
                 <dd className="mt-1 font-display text-xl font-medium">{selection.from ? format(fromKey(selection.from), 'd. M. yyyy') : '–'}</dd>
               </div>
               <div className="rounded-2xl bg-surface p-4">
-                <dt className="text-[11px] font-semibold uppercase tracking-wider text-ink-muted">Odjezd</dt>
+                <dt className="text-xs font-semibold uppercase tracking-wider text-ink-muted">Odjezd</dt>
                 <dd className="mt-1 font-display text-xl font-medium">{selection.to ? format(fromKey(selection.to), 'd. M. yyyy') : '–'}</dd>
               </div>
             </dl>
@@ -159,7 +177,7 @@ export function Calendar({ selection, onSelect }: { selection: Selection; onSele
                     <Info className="mt-0.5 size-3.5 shrink-0" /> {est.hint}
                   </p>
                 )}
-                <p className="mt-2 text-[11px] text-ink-muted">Orientační cena podle ceníku, potvrdíme v odpovědi na poptávku.</p>
+                <p className="mt-2 text-xs text-ink-muted">Orientační cena podle ceníku, potvrdíme v odpovědi na poptávku.</p>
               </div>
             ) : (
               <p className="mt-4 text-sm leading-relaxed text-ink-muted">
@@ -167,9 +185,15 @@ export function Calendar({ selection, onSelect }: { selection: Selection; onSele
               </p>
             )}
             <div className="mt-auto pt-6">
-              <a href="#poptavka" className={clsx('btn-accent w-full', !selection.to && 'pointer-events-none opacity-50')}>
-                Poptat tento termín
-              </a>
+              {selection.to ? (
+                <a href="#poptavka" className="btn-accent w-full">
+                  Poptat tento termín
+                </a>
+              ) : (
+                <span aria-disabled="true" className="btn-ghost w-full cursor-not-allowed text-ink-muted">
+                  Nejdřív vyberte termín
+                </span>
+              )}
               {selection.from && (
                 <button onClick={() => onSelect({ from: null, to: null })} className="mt-2 w-full text-center text-xs text-ink-muted underline-offset-2 hover:underline">
                   Zrušit výběr

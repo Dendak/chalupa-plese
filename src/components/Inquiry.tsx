@@ -130,7 +130,7 @@ export function Inquiry({ selection, onSelect }: { selection: Selection; onSelec
                 </div>
                 <div className="flex items-end">
                   <label className="flex w-full cursor-pointer items-center gap-3 rounded-2xl border border-line bg-bg-elevated px-4 py-3 text-sm">
-                    <input type="checkbox" name="pets" className="size-4 accent-[var(--forest)]" /> Přijedeme s pejskem
+                    <input type="checkbox" name="pets" className="size-5 accent-[var(--forest)]" /> Přijedeme s pejskem
                   </label>
                 </div>
                 <div>
@@ -156,13 +156,13 @@ export function Inquiry({ selection, onSelect }: { selection: Selection; onSelec
                   {format(fromKey(selection.from!), 'd. M.')} – {format(fromKey(selection.to!), 'd. M. yyyy')} · {est.nights} nocí · {est.price ? `orientačně ${czk(est.price)}` : 'cena na dotaz'}
                 </p>
               )}
-              {status === 'error' && <p className="mt-4 rounded-2xl bg-terracotta-soft px-4 py-3 text-sm text-terracotta">Odeslání se nezdařilo. Zkuste to prosím znovu nebo nám zavolejte.</p>}
+              {status === 'error' && <p role="alert" className="mt-4 rounded-2xl bg-terracotta-soft px-4 py-3 text-sm text-terracotta">Odeslání se nezdařilo. Zkuste to prosím znovu nebo nám zavolejte.</p>}
 
               <button type="submit" disabled={status === 'sending'} className={clsx('btn-accent mt-6 w-full py-3.5 text-base', status === 'sending' && 'opacity-70')}>
                 {status === 'sending' ? <Loader2 className="size-5 animate-spin" /> : <Send className="size-4" />}
                 Odeslat nezávaznou poptávku
               </button>
-              <p className="mt-3 text-center text-[11px] text-ink-muted">Odesláním souhlasíte se zpracováním údajů pro účely vyřízení poptávky.</p>
+              <p className="mt-3 text-center text-xs text-ink-muted">Odesláním souhlasíte se zpracováním údajů pro účely vyřízení poptávky.</p>
             </form>
           )}
         </Reveal>

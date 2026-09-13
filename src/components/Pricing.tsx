@@ -18,7 +18,7 @@ export function Pricing() {
                 p.accent && 'border-transparent bg-gradient-to-br from-forest to-forest-deep text-white shadow-lifted dark:text-bg',
               )}
             >
-              {p.accent && <span className="absolute right-4 top-4 rounded-full bg-gold px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-forest-deep">Léto</span>}
+              {p.accent && <span className="absolute right-4 top-4 rounded-full bg-gold px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-[oklch(26%_0.06_155)]">Léto</span>}
               <p className={clsx('eyebrow', p.accent && 'pr-14 text-gold')}>{p.period}</p>
               <h3 className="mt-2 text-lg font-semibold">{p.title}</h3>
               <p className="mt-5 font-display text-3xl font-medium sm:text-4xl">{czk(p.price)}</p>

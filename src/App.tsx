@@ -11,6 +11,7 @@ import { Calendar, type Selection } from './components/Calendar';
 import { Reviews } from './components/Reviews';
 import { Inquiry } from './components/Inquiry';
 import { Footer } from './components/Footer';
+import { MobileCta } from './components/MobileCta';
 
 const MapSection = lazy(() => import('./components/MapSection').then((m) => ({ default: m.MapSection })));
 
@@ -19,7 +20,7 @@ export default function App() {
   return (
     <>
       <Nav />
-      <main>
+      <main id="main">
         <Hero />
         <Highlights />
         <Gallery />
@@ -35,6 +36,7 @@ export default function App() {
         <Inquiry selection={selection} onSelect={setSelection} />
       </main>
       <Footer />
+      <MobileCta />
     </>
   );
 }

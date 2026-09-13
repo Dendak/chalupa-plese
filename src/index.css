@@ -16,8 +16,8 @@
   --forest-deep: oklch(26% 0.06 155);
   --forest-soft: oklch(90% 0.04 150);
   --moss: oklch(58% 0.1 140);
-  --terracotta: oklch(63% 0.15 40);
-  --terracotta-soft: oklch(92% 0.05 45);
+  --terracotta: oklch(50% 0.16 40);
+  --terracotta-soft: oklch(93% 0.045 45);
   --gold: oklch(78% 0.13 85);
   --shadow: 0 1px 2px oklch(0% 0 0 / 0.04), 0 12px 32px -12px oklch(30% 0.05 60 / 0.25);
   --shadow-lg: 0 2px 4px oklch(0% 0 0 / 0.05), 0 30px 60px -20px oklch(30% 0.05 60 / 0.35);
@@ -103,6 +103,9 @@ p { text-wrap: pretty; }
 @utility eyebrow {
   @apply text-xs font-semibold uppercase tracking-[0.18em] text-terracotta;
 }
+@utility sr-only-focusable {
+  @apply sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-forest focus:px-5 focus:py-3 focus:text-white;
+}
 @utility btn {
   @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 select-none;
   transition-timing-function: var(--ease-out-expo);
@@ -112,6 +115,7 @@ p { text-wrap: pretty; }
   background: linear-gradient(135deg, var(--forest), var(--forest-deep));
 }
 .dark .btn-primary { color: var(--bg); }
+.dark .btn-accent { color: var(--bg); }
 @utility btn-accent {
   @apply btn bg-terracotta text-white shadow-soft hover:-translate-y-0.5 hover:shadow-lifted active:translate-y-0;
 }

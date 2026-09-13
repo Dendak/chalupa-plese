@@ -41,7 +41,8 @@ export function Gallery() {
                   sizes={i === 0 ? '(min-width:1024px) 50vw, 100vw' : '(min-width:1024px) 25vw, 50vw'}
                   className="h-full w-full"
                   imgClassName="transition-transform duration-[1.2s] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-105"
-                  priority={i < 3}
+                  priority={i === 0}
+                  alt=""
                 />
               </button>
             ))}
@@ -117,10 +118,10 @@ function Carousel({ photos, onOpen }: { photos: Photo[]; onOpen: (p: Photo) => v
     <div className="relative mt-6">
       <div
         ref={ref}
-        className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth px-5 pb-2 sm:px-8 lg:px-[max(2rem,calc((100vw-80rem)/2+2rem))]"
+        role="region" aria-label="Fotografie – posuvný pás" className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth px-5 pb-2 sm:px-8 lg:px-[max(2rem,calc((100vw-80rem)/2+2rem))]"
         style={{ scrollPaddingInline: 'max(2rem, calc((100vw - 80rem) / 2 + 2rem))' }}
       >
-        {photos.map((p, i) => (
+        {photos.map((p) => (
           <button
             key={p.id}
             onClick={() => onOpen(p)}
@@ -128,7 +129,7 @@ function Carousel({ photos, onOpen }: { photos: Photo[]; onOpen: (p: Photo) => v
             className={clsx('group relative shrink-0 snap-start overflow-hidden rounded-2xl shadow-soft outline-offset-4', ROW_H)}
             style={{ aspectRatio: `${p.width} / ${p.height}` }}
           >
-            <Picture photo={p} sizes="(min-width:1024px) 420px, 320px" className="h-full w-full" imgClassName="transition-transform duration-[1.2s] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-105" priority={i < 3} />
+            <Picture photo={p} sizes="(min-width:1024px) 420px, 320px" className="h-full w-full" imgClassName="transition-transform duration-[1.2s] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-105" alt="" />
             <span className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
             <span className="absolute inset-x-0 bottom-0 p-4 text-left text-sm font-medium text-white opacity-0 transition-opacity duration-500 group-hover:opacity-100">{p.caption}</span>
           </button>

@@ -6,7 +6,7 @@ import { REVIEWS, type Review } from '@/data/reviews';
 
 function Stars({ n, className = 'size-3.5' }: { n: number; className?: string }) {
   return (
-    <div className="flex gap-0.5 text-gold" aria-label={`${n} z 5`}>
+    <div className="flex gap-0.5 text-gold" role="img" aria-label={`Hodnocení ${n} z 5`}>
       {Array.from({ length: 5 }).map((_, i) => (
         <Star key={i} className={`${className} ${i < Math.round(n) ? 'fill-current' : 'opacity-30'}`} />
       ))}
@@ -55,7 +55,7 @@ export function Reviews() {
         </div>
       </div>
 
-      <div className="no-scrollbar mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 sm:px-8 lg:px-[max(2rem,calc((100vw-80rem)/2+2rem))]">
+      <div tabIndex={0} role="region" aria-label="Vybrané recenze – posuvný pás" className="no-scrollbar mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 outline-offset-4 sm:px-8 lg:px-[max(2rem,calc((100vw-80rem)/2+2rem))]">
         {featured.map((r, i) => (
           <Reveal key={r.date + r.name} as="article" delay={i * 0.05} className="w-[85vw] max-w-md shrink-0 snap-center sm:w-[380px]">
             <Card r={r} />

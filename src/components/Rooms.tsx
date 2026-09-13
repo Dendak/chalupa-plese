@@ -11,7 +11,7 @@ export function Rooms() {
         title="Tři ložnice, dvě koupelny a spousta místa na setkávání."
         text="Do všech postelí jsme koupili nové pohodlné matrace. Ručníky, osušky i povlečení jsou samozřejmostí."
       />
-      <div className="no-scrollbar mt-12 -mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-3">
+      <div tabIndex={0} role="region" aria-label="Pokoje – posuvný pás" className="no-scrollbar mt-12 -mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 outline-offset-4 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-3">
         {ROOMS.map((r, i) => (
           <Reveal key={r.title} as="article" delay={i * 0.06} className="w-[82vw] shrink-0 snap-center sm:w-auto">
             <div className="card group h-full overflow-hidden">

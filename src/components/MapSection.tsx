@@ -27,7 +27,7 @@ export function MapSection() {
             <MapContainer center={[lat + 0.015, lng + 0.06]} zoom={11} scrollWheelZoom={false} className="h-full w-full">
               <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" />
               {POIS.map((p) => (
-                <Marker key={p.name} position={[p.lat, p.lng]} icon={p.type === 'home' ? homeIcon : poiIcon}>
+                <Marker key={p.name} position={[p.lat, p.lng]} icon={p.type === 'home' ? homeIcon : poiIcon} title={p.name} alt={p.name}>
                   <Popup>
                     <strong>{p.name}</strong>
                     <br />

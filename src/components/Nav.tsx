@@ -46,7 +46,11 @@ export function Nav() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5">
+      <a href="#main" className="sr-only-focusable">
+        Přeskočit na obsah
+      </a>
       <nav
+        aria-label="Hlavní navigace"
         className={clsx(
           'container-x flex items-center justify-between rounded-full py-2 pl-5 pr-2 transition-all duration-500',
           scrolled || open ? 'glass shadow-soft' : 'bg-transparent',
@@ -105,6 +109,7 @@ export function Nav() {
 
       {/* Mobilní menu */}
       <div
+        inert={!open}
         className={clsx(
           'container-x mt-2 overflow-hidden transition-all duration-500 lg:hidden',
           open ? 'max-h-[80vh] opacity-100' : 'pointer-events-none max-h-0 opacity-0',
