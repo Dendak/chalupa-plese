@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Star, Quote, ChevronDown } from 'lucide-react';
 import { Reveal, SectionHeading } from './Reveal';
+import { Rail } from './Rail';
 import { SITE } from '@/data/site';
 import { REVIEWS, type Review } from '@/data/reviews';
 import { useI18n, type Lang } from '@/i18n';
@@ -28,7 +29,7 @@ function Card({ r, compact }: { r: Review; compact?: boolean }) {
   return (
     <figure className={`card flex h-full flex-col ${compact ? 'p-6' : 'p-7'}`}>
       <Quote className="size-7 text-terracotta" />
-      <blockquote lang={translated ? lang : r.en === r.text ? 'en' : 'cs'} className={`mt-4 flex-1 leading-relaxed ${compact ? 'text-sm' : 'text-[15px]'}`}>
+      <blockquote lang={translated ? lang : r.en === r.text ? 'en' : 'cs'} className={`mt-4 flex-1 leading-relaxed ${compact ? 'text-sm' : 'line-clamp-[9] text-[15px]'}`} title={text}>
         {text}
       </blockquote>
       <figcaption className="mt-6 flex items-center justify-between border-t border-line pt-4">
@@ -71,15 +72,15 @@ export function Reviews() {
         </div>
       </div>
 
-      <div tabIndex={0} role="region" aria-label={t.reviews.region} className="no-scrollbar mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 outline-offset-4 sm:px-8 lg:px-[max(2rem,calc((100vw-80rem)/2+2rem))]">
-        {featured.map((r, i) => (
-          <Reveal key={r.date + r.name} as="article" delay={i * 0.05} className="w-[85vw] max-w-md shrink-0 snap-center sm:w-[380px]">
-            <Card r={r} />
-          </Reveal>
-        ))}
-      </div>
-
       <div className="container-x">
+        <Rail label={t.reviews.region} prevLabel={t.reviews.prev} nextLabel={t.reviews.next} className="mt-12">
+          {featured.map((r, i) => (
+            <Reveal key={r.date + r.name} as="article" delay={i * 0.05} className="w-[85vw] max-w-sm shrink-0 snap-start sm:w-[360px]">
+              <Card r={r} />
+            </Reveal>
+          ))}
+        </Rail>
+
         {all && (
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {rest.map((r) => (

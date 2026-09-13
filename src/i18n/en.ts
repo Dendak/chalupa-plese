@@ -272,6 +272,8 @@ export const en: Dict = {
     showAll: (n) => `Show all reviews (${n})`,
     hide: 'Hide reviews',
     region: 'Selected reviews – scrollable strip',
+    prev: 'Previous reviews',
+    next: 'More reviews',
     stars: (n) => `Rating ${n} out of 5`,
     translated: 'translated from Czech',
     seasons: { summer: 'summer', winter: 'winter', spring: 'spring', autumn: 'autumn', xmas: 'Christmas', nye: 'New Year’s Eve' },

@@ -271,6 +271,8 @@ export const cs = {
     showAll: (n: number) => `Zobrazit všechna hodnocení (${n})`,
     hide: 'Skrýt další hodnocení',
     region: 'Vybrané recenze – posuvný pás',
+    prev: 'Předchozí recenze',
+    next: 'Další recenze',
     stars: (n: number) => `Hodnocení ${n} z 5`,
     translated: '',
     seasons: { summer: 'léto', winter: 'zima', spring: 'jaro', autumn: 'podzim', xmas: 'Vánoce', nye: 'Silvestr' },

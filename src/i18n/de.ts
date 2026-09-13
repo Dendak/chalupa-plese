@@ -272,6 +272,8 @@ export const de: Dict = {
     showAll: (n) => `Alle Bewertungen anzeigen (${n})`,
     hide: 'Bewertungen ausblenden',
     region: 'Ausgewählte Bewertungen – scrollbare Leiste',
+    prev: 'Vorherige Bewertungen',
+    next: 'Weitere Bewertungen',
     stars: (n) => `Bewertung ${n} von 5`,
     translated: 'aus dem Tschechischen übersetzt',
     seasons: { summer: 'Sommer', winter: 'Winter', spring: 'Frühling', autumn: 'Herbst', xmas: 'Weihnachten', nye: 'Silvester' },
