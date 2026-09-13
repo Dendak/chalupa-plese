@@ -244,8 +244,8 @@ export const de: Dict = {
     text: 'Pleše liegt zwischen Kardašova Řečice und Soběslav. Hinter dem Haus gibt es nur Wiesen und Wälder – und trotzdem ist Prag eine Stunde entfernt, Linz und Wien etwa zwei.',
     drive: 'Fahrzeiten',
     driveNote: 'Bushaltestelle 250 m, Bahnhof Doňov 3 km. Dorfladen 5 Minuten zu Fuß, rund um die Uhr geöffnet.',
-    mapy: 'Mapy.com',
-    navigate: 'Navigation',
+    navigateWith: 'Navigieren mit:',
+    navHint: 'Öffnet die Route zum Haus in der gewünschten App.',
     min: (n) => (n >= 60 ? `${n / 60} Std.` : `${n} Min.`),
     pois: {
       home: { name: 'Chalupa Pleše', text: 'Pleše 40 – das letzte Haus im Dorf' },

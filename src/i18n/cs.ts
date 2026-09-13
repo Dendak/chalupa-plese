@@ -243,8 +243,8 @@ export const cs = {
     text: 'Pleše leží mezi Kardašovou Řečicí a Soběslaví. Za chalupou už jsou jen louky a lesy – a přesto je to hodina z Prahy.',
     drive: 'Dojezd autem',
     driveNote: 'Autobusová zastávka 250 m, vlak Doňov 3 km. Obchod na návsi 5 minut pěšky, nonstop.',
-    mapy: 'Mapy.com',
-    navigate: 'Navigovat',
+    navigateWith: 'Navigovat:',
+    navHint: 'Otevře trasu k chalupě ve vybrané aplikaci.',
     min: (n: number) => (n >= 60 ? `${n / 60} hod` : `${n} min`),
     pois: {
       home: { name: 'Chalupa Pleše', text: 'Pleše 40 – poslední dům ve vesnici' },

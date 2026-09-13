@@ -1,6 +1,6 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
-import { Car, Navigation } from 'lucide-react';
+import { Navigation } from 'lucide-react';
 import { Reveal, SectionHeading } from './Reveal';
 import { DISTANCES, OWNER, POIS } from '@/data/site';
 import { useI18n } from '@/i18n';
@@ -18,8 +18,12 @@ export function MapSection() {
   const { t } = useI18n();
   const m = t.map;
   const { lat, lng } = OWNER.gps;
-  const nav = `https://mapy.com/cs/zakladni?source=coor&id=${lng}%2C${lat}&x=${lng}&y=${lat}&z=15`;
-  const gmaps = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+  const NAV_APPS = [
+    { name: 'Google Maps', href: `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving` },
+    { name: 'Waze', href: `https://waze.com/ul?ll=${lat},${lng}&navigate=yes` },
+    { name: 'Mapy.com', href: `https://mapy.com/cs/zakladni?planovani-trasy&rc=&rt=&mrp=%7B%22c%22%3A111%7D&x=${lng}&y=${lat}&z=15&source=coor&id=${lng}%2C${lat}` },
+    { name: 'Apple Maps', href: `https://maps.apple.com/?daddr=${lat},${lng}&dirflg=d` },
+  ];
   return (
     <section id="okoli" className="container-x py-24 sm:py-32">
       <SectionHeading eyebrow={m.eyebrow} title={m.title} text={m.text} />
@@ -43,18 +47,21 @@ export function MapSection() {
               })}
             </MapContainer>
           </div>
-          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line p-4">
+          <div className="border-t border-line p-4">
             <p className="text-sm">
               <strong>{OWNER.address.street}</strong>, {OWNER.address.zip} {OWNER.address.city} · GPS {lat}N, {lng}E
             </p>
-            <div className="flex gap-2">
-              <a href={nav} target="_blank" rel="noreferrer" className="btn-ghost py-2 text-xs">
-                <Navigation className="size-3.5" /> {m.mapy}
-              </a>
-              <a href={gmaps} target="_blank" rel="noreferrer" className="btn-primary py-2 text-xs">
-                <Car className="size-3.5" /> {m.navigate}
-              </a>
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <span className="mr-1 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-ink-muted">
+                <Navigation className="size-3.5" /> {m.navigateWith}
+              </span>
+              {NAV_APPS.map((app, i) => (
+                <a key={app.name} href={app.href} target="_blank" rel="noreferrer" className={i === 0 ? 'btn-primary py-2 text-xs' : 'btn-ghost py-2 text-xs'}>
+                  {app.name}
+                </a>
+              ))}
             </div>
+            <p className="mt-2 text-xs text-ink-muted">{m.navHint}</p>
           </div>
         </Reveal>
 

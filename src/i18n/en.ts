@@ -244,8 +244,8 @@ export const en: Dict = {
     text: 'Pleše lies between Kardašova Řečice and Soběslav. Beyond the cottage there are only meadows and woods – and yet Prague is an hour away, Vienna and Linz about two.',
     drive: 'Driving times',
     driveNote: 'Bus stop 250 m, Doňov railway station 3 km. Village shop 5 minutes on foot, open around the clock.',
-    mapy: 'Mapy.com',
-    navigate: 'Navigate',
+    navigateWith: 'Navigate with:',
+    navHint: 'Opens the route to the cottage in your preferred app.',
     min: (n) => (n >= 60 ? `${n / 60} h` : `${n} min`),
     pois: {
       home: { name: 'Chalupa Pleše', text: 'Pleše 40 – the last house in the village' },
