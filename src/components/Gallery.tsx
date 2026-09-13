@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
+import { Rail } from './Rail';
 import clsx from 'clsx';
 import { ChevronLeft, ChevronRight, X, Images } from 'lucide-react';
 import { Picture, srcSet, srcOf } from './Picture';
@@ -87,48 +88,13 @@ export function Gallery() {
   );
 }
 
-/** Filmový pás: jednotná výška, šířka podle poměru stran, scroll-snap, šipky. */
+/** Filmový pás: jednotná výška, šířka podle poměru stran, ohraničený obsahem. */
 function Carousel({ photos, onOpen }: { photos: Photo[]; onOpen: (p: Photo) => void }) {
   const { t } = useI18n();
   const g = t.gallery;
-  const ref = useRef<HTMLDivElement>(null);
-  const [progress, setProgress] = useState(0);
-  const [atStart, setAtStart] = useState(true);
-  const [atEnd, setAtEnd] = useState(false);
-
-  const update = useCallback(() => {
-    const el = ref.current;
-    if (!el) return;
-    const max = el.scrollWidth - el.clientWidth;
-    setProgress(max > 0 ? el.scrollLeft / max : 1);
-    setAtStart(el.scrollLeft < 8);
-    setAtEnd(el.scrollLeft > max - 8);
-  }, []);
-
-  useEffect(() => {
-    update();
-    const el = ref.current;
-    if (!el) return;
-    el.addEventListener('scroll', update, { passive: true });
-    const ro = new ResizeObserver(update);
-    ro.observe(el);
-    return () => {
-      el.removeEventListener('scroll', update);
-      ro.disconnect();
-    };
-  }, [update]);
-
-  const scrollBy = (dir: 1 | -1) => ref.current?.scrollBy({ left: dir * ref.current.clientWidth * 0.8, behavior: 'smooth' });
-
   return (
-    <div className="relative mt-6">
-      <div
-        ref={ref}
-        role="region"
-        aria-label={g.region}
-        className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth px-5 pb-2 sm:px-8 lg:px-[max(2rem,calc((100vw-80rem)/2+2rem))]"
-        style={{ scrollPaddingInline: 'max(2rem, calc((100vw - 80rem) / 2 + 2rem))' }}
-      >
+    <div className="container-x">
+      <Rail label={g.region} prevLabel={g.prevPhotos} nextLabel={g.nextPhotos} className="mt-6" padClass="px-1 py-2 gap-3">
         {photos.map((p) => (
           <button
             key={p.id}
@@ -142,21 +108,7 @@ function Carousel({ photos, onOpen }: { photos: Photo[]; onOpen: (p: Photo) => v
             <span className="absolute inset-x-0 bottom-0 p-4 text-left text-sm font-medium text-white opacity-0 transition-opacity duration-500 group-hover:opacity-100">{g.captions[p.id]}</span>
           </button>
         ))}
-      </div>
-
-      <div className="container-x mt-4 flex items-center justify-between gap-4">
-        <div className="h-1 flex-1 overflow-hidden rounded-full bg-line">
-          <div className="h-full rounded-full bg-forest transition-[width] duration-150" style={{ width: `${Math.max(8, progress * 100)}%` }} />
-        </div>
-        <div className="flex gap-2">
-          <button onClick={() => scrollBy(-1)} disabled={atStart} aria-label={g.prevPhotos} className="grid size-11 place-items-center rounded-full border border-line bg-bg-elevated shadow-soft transition hover:bg-surface disabled:opacity-30">
-            <ChevronLeft className="size-5" />
-          </button>
-          <button onClick={() => scrollBy(1)} disabled={atEnd} aria-label={g.nextPhotos} className="grid size-11 place-items-center rounded-full border border-line bg-bg-elevated shadow-soft transition hover:bg-surface disabled:opacity-30">
-            <ChevronRight className="size-5" />
-          </button>
-        </div>
-      </div>
+      </Rail>
     </div>
   );
 }

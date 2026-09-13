@@ -13,7 +13,7 @@ interface Props {
 }
 
 /** Vodorovný karusel ohraničený šířkou obsahu: scroll-snap, šipky, ukazatel průběhu. */
-export function Rail({ children, label, prevLabel, nextLabel, className, padClass = 'px-1 py-2' }: Props) {
+export function Rail({ children, label, prevLabel, nextLabel, className, padClass = 'px-1 py-2 gap-5' }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
   const [atStart, setAtStart] = useState(true);
@@ -47,7 +47,7 @@ export function Rail({ children, label, prevLabel, nextLabel, className, padClas
 
   return (
     <div className={className}>
-      <div ref={ref} role="region" aria-label={label} tabIndex={0} className={clsx('no-scrollbar -mx-1 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth outline-offset-4', padClass)}>
+      <div ref={ref} role="region" aria-label={label} tabIndex={0} className={clsx('no-scrollbar -mx-1 flex snap-x snap-mandatory overflow-x-auto scroll-smooth outline-offset-4', padClass)}>
         {children}
       </div>
       {scrollable && (
