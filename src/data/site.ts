@@ -244,38 +244,7 @@ export const VIDEOS = [
   { id: 'QjouojOHjpI', title: 'Okolí chalupy' },
 ];
 
-export const REVIEWS = [
-  {
-    name: 'Jana s rodinou',
-    when: 'léto 2026',
-    text: 'Nádherná vybavená chalupa, super zahrada pro všechny včetně pejsků. Milý ochotný hostitel. Nic nám nechybělo. Moc rádi se zase vrátíme a za všechno ještě jednou děkujeme.',
-  },
-  {
-    name: 'Lenka s rodinou',
-    when: 'léto 2026',
-    text: 'Naprostá nádhera, to se nedá popsat. Dokonalá komunikace majitele, naprosto dokonalé ubytování. Vše plně vybavené, dokonce i příslušenstvím, které by nikdo nečekal. Spokojenost všech členů rodiny, i psa.',
-  },
-  {
-    name: 'Romana s rodinou',
-    when: 'léto 2026',
-    text: 'Naprostá spokojenost, od začátku perfektní komunikace s majitelem. Klidné místo pro relax, zvláště zahradní část. Ocenili jsme vstřícnost ohledně ubytování s pejskem. Celkově doporučuji.',
-  },
-  {
-    name: 'Ludmila s rodinou',
-    when: 'léto 2026',
-    text: 'Krásná chalupa, prostorná zahrada, velmi milé a vstřícné jednání majitele.',
-  },
-  {
-    name: 'Petra s více rodinami',
-    when: 'léto 2025',
-    text: 'Vše bylo v pořádku, skvěle vybavená chalupa a perfektní komunikace s majitelem. Děkujeme.',
-  },
-  {
-    name: 'Guests from abroad',
-    when: 'Silvestr',
-    text: 'A wonderful and cozy stay. We stayed over New Year with our dog, who is very scared of fireworks, and he was never so relaxed before. Everything was very clean, the host was very helpful and friendly. We also got fresh honey, wine and coffee as a welcoming gift!',
-  },
-];
+// Recenze: viz src/data/reviews.ts
 
 export const POIS = [
   { name: 'Chalupa Pleše', lat: 49.19876, lng: 14.82343, type: 'home', text: 'Pleše 40 – poslední dům ve vesnici' },

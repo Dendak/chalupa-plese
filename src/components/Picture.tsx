@@ -4,6 +4,9 @@ import type { Photo } from '@/data/photos';
 
 const BASE = import.meta.env.BASE_URL;
 
+export const srcSet = (photo: Photo, fmt: 'webp' | 'avif') => photo[fmt].map((w) => `${BASE}img/${photo.id}-${w}.${fmt} ${w}w`).join(', ');
+export const srcOf = (photo: Photo, w = Math.max(...photo.webp)) => `${BASE}img/${photo.id}-${w}.webp`;
+
 interface Props {
   photo: Photo;
   sizes?: string;
@@ -15,18 +18,16 @@ interface Props {
 
 export function Picture({ photo, sizes = '100vw', className, imgClassName, priority, alt }: Props) {
   const [loaded, setLoaded] = useState(false);
-  const srcset = (fmt: 'webp' | 'avif', ws: number[]) => ws.map((w) => `${BASE}img/${photo.id}-${w}.${fmt} ${w}w`).join(', ');
-  const largest = Math.max(...photo.webp);
   return (
     <div
       className={clsx('relative overflow-hidden bg-surface', className)}
       style={{ backgroundImage: `url(${photo.lqip})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
     >
       <picture>
-        {photo.avif.length > 0 && <source type="image/avif" srcSet={srcset('avif', photo.avif)} sizes={sizes} />}
-        <source type="image/webp" srcSet={srcset('webp', photo.webp)} sizes={sizes} />
+        {photo.avif.length > 0 && <source type="image/avif" srcSet={srcSet(photo, 'avif')} sizes={sizes} />}
+        <source type="image/webp" srcSet={srcSet(photo, 'webp')} sizes={sizes} />
         <img
-          src={`${BASE}img/${photo.id}-${largest}.webp`}
+          src={srcOf(photo)}
           width={photo.width}
           height={photo.height}
           alt={alt ?? photo.caption}
