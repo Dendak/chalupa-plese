@@ -1,0 +1,233 @@
+@import 'tailwindcss';
+@import 'leaflet/dist/leaflet.css';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------- Design tokens (OKLCH, světlý + tmavý režim) ---------- */
+:root {
+  --bg: oklch(97.5% 0.012 85);
+  --bg-elevated: oklch(99% 0.006 85);
+  --surface: oklch(94.5% 0.022 82);
+  --surface-strong: oklch(90% 0.03 80);
+  --ink: oklch(24% 0.02 60);
+  --ink-muted: oklch(46% 0.02 60);
+  --line: oklch(86% 0.02 80);
+  --forest: oklch(34% 0.07 155);
+  --forest-deep: oklch(26% 0.06 155);
+  --forest-soft: oklch(90% 0.04 150);
+  --moss: oklch(58% 0.1 140);
+  --terracotta: oklch(63% 0.15 40);
+  --terracotta-soft: oklch(92% 0.05 45);
+  --gold: oklch(78% 0.13 85);
+  --shadow: 0 1px 2px oklch(0% 0 0 / 0.04), 0 12px 32px -12px oklch(30% 0.05 60 / 0.25);
+  --shadow-lg: 0 2px 4px oklch(0% 0 0 / 0.05), 0 30px 60px -20px oklch(30% 0.05 60 / 0.35);
+  --font-display: 'Fraunces', ui-serif, Georgia, serif;
+  --font-body: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: oklch(17% 0.015 150);
+  --bg-elevated: oklch(21% 0.016 150);
+  --surface: oklch(24% 0.018 150);
+  --surface-strong: oklch(29% 0.02 150);
+  --ink: oklch(94% 0.012 85);
+  --ink-muted: oklch(72% 0.015 85);
+  --line: oklch(32% 0.02 150);
+  --forest: oklch(74% 0.09 150);
+  --forest-deep: oklch(84% 0.07 150);
+  --forest-soft: oklch(28% 0.04 150);
+  --moss: oklch(68% 0.1 140);
+  --terracotta: oklch(72% 0.14 42);
+  --terracotta-soft: oklch(30% 0.05 45);
+  --gold: oklch(82% 0.13 85);
+  --shadow: 0 1px 2px oklch(0% 0 0 / 0.4), 0 12px 32px -12px oklch(0% 0 0 / 0.6);
+  --shadow-lg: 0 2px 4px oklch(0% 0 0 / 0.5), 0 30px 60px -20px oklch(0% 0 0 / 0.7);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-line: var(--line);
+  --color-forest: var(--forest);
+  --color-forest-deep: var(--forest-deep);
+  --color-forest-soft: var(--forest-soft);
+  --color-moss: var(--moss);
+  --color-terracotta: var(--terracotta);
+  --color-terracotta-soft: var(--terracotta-soft);
+  --color-gold: var(--gold);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --shadow-soft: var(--shadow);
+  --shadow-lifted: var(--shadow-lg);
+  --radius-xl2: 1.75rem;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ---------- Base ---------- */
+html {
+  scroll-padding-top: 5.5rem;
+}
+body {
+  @apply bg-bg text-ink font-body antialiased;
+  font-feature-settings: 'ss01', 'cv11';
+  text-rendering: optimizeLegibility;
+}
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+  font-variation-settings: 'opsz' 144, 'SOFT' 50;
+  text-wrap: balance;
+}
+p { text-wrap: pretty; }
+::selection { background: var(--terracotta); color: white; }
+:focus-visible { outline: 2px solid var(--terracotta); outline-offset: 3px; border-radius: 4px; }
+
+/* ---------- Utility ---------- */
+@utility container-x {
+  @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
+}
+@utility glass {
+  background: color-mix(in oklch, var(--bg-elevated) 72%, transparent);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  border: 1px solid color-mix(in oklch, var(--line) 70%, transparent);
+}
+@utility card {
+  @apply bg-bg-elevated rounded-xl2 border border-line shadow-soft;
+}
+@utility eyebrow {
+  @apply text-xs font-semibold uppercase tracking-[0.18em] text-terracotta;
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 select-none;
+  transition-timing-function: var(--ease-out-expo);
+}
+@utility btn-primary {
+  @apply btn bg-forest text-white shadow-soft hover:-translate-y-0.5 hover:shadow-lifted active:translate-y-0;
+  background: linear-gradient(135deg, var(--forest), var(--forest-deep));
+}
+.dark .btn-primary { color: var(--bg); }
+@utility btn-accent {
+  @apply btn bg-terracotta text-white shadow-soft hover:-translate-y-0.5 hover:shadow-lifted active:translate-y-0;
+}
+@utility btn-ghost {
+  @apply btn border border-line bg-bg-elevated/60 text-ink hover:bg-surface;
+}
+@utility chip {
+  @apply inline-flex items-center gap-1.5 rounded-full border border-line bg-bg-elevated/70 px-3 py-1.5 text-xs font-medium text-ink;
+}
+
+/* ---------- Scroll-driven animace (CSS 2026, fallback přes Motion) ---------- */
+@supports (animation-timeline: view()) {
+  .reveal-css {
+    animation: reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 40%;
+  }
+  .hero-parallax {
+    animation: hero-shift linear both;
+    animation-timeline: scroll();
+    animation-range: 0 100vh;
+  }
+}
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(24px) scale(0.985); filter: blur(6px); }
+  to { opacity: 1; transform: none; filter: blur(0); }
+}
+@keyframes hero-shift {
+  to { transform: translateY(18%) scale(1.08); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.animate-float { animation: float 6s ease-in-out infinite; }
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+.animate-marquee { animation: marquee 40s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* ---------- Dialog (lightbox) s @starting-style ---------- */
+dialog.lightbox {
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 0.35s var(--ease-out-expo), transform 0.35s var(--ease-out-expo), overlay 0.35s allow-discrete, display 0.35s allow-discrete;
+}
+dialog.lightbox[open] { opacity: 1; transform: none; }
+@starting-style {
+  dialog.lightbox[open] { opacity: 0; transform: scale(0.96); }
+}
+dialog.lightbox::backdrop {
+  background: oklch(10% 0.02 150 / 0.86);
+  backdrop-filter: blur(10px);
+}
+
+/* ---------- Leaflet ---------- */
+.leaflet-container {
+  font-family: var(--font-body);
+  background: var(--surface);
+  border-radius: inherit;
+}
+.dark .leaflet-tile-pane { filter: brightness(0.75) contrast(1.05) saturate(0.7); }
+.leaflet-popup-content-wrapper {
+  background: var(--bg-elevated);
+  color: var(--ink);
+  border-radius: 14px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--line);
+}
+.leaflet-popup-tip { background: var(--bg-elevated); }
+.leaflet-popup-content { margin: 12px 14px; font-size: 13px; line-height: 1.4; }
+.leaflet-control-zoom a {
+  background: var(--bg-elevated) !important;
+  color: var(--ink) !important;
+  border-color: var(--line) !important;
+}
+.leaflet-control-attribution { background: color-mix(in oklch, var(--bg-elevated) 80%, transparent) !important; color: var(--ink-muted) !important; font-size: 10px; }
+.leaflet-control-attribution a { color: var(--forest) !important; }
+.marker-home {
+  width: 46px; height: 46px; border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  background: linear-gradient(135deg, var(--terracotta), oklch(55% 0.15 35));
+  border: 3px solid white;
+  box-shadow: 0 8px 20px -6px oklch(0% 0 0 / 0.5);
+  display: grid; place-items: center;
+}
+.marker-home svg { transform: rotate(45deg); }
+.marker-poi {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--forest);
+  border: 2.5px solid white;
+  box-shadow: 0 3px 8px oklch(0% 0 0 / 0.35);
+}
+.dark .marker-poi { border-color: var(--bg); }
+
+/* ---------- Kalendář ---------- */
+.day-arrival {
+  background: linear-gradient(135deg, transparent 50%, var(--booked) 50%);
+}
+.day-departure {
+  background: linear-gradient(135deg, var(--booked) 50%, transparent 50%);
+}
+.day-booked { background: var(--booked); }
+:root { --booked: oklch(88% 0.05 40); }
+.dark { --booked: oklch(38% 0.06 40); }
+
+/* ---------- Details/summary ---------- */
+details > summary { list-style: none; cursor: pointer; }
+details > summary::-webkit-details-marker { display: none; }
+details[open] .chev { transform: rotate(180deg); }
+.chev { transition: transform 0.3s var(--ease-out-expo); }
+
+/* Scrollbar-less horizontal rails */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }

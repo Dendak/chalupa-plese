@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="cs" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#1f3a2a" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f1a14" media="(prefers-color-scheme: dark)" />
+    <title>Chalupa Pleše – pronájem chalupy pro 8 osob, Jižní Čechy</title>
+    <meta
+      name="description"
+      content="Přestavěný statek s uzavřeným dvorem a oplocenou zahradou na konci vesnice Pleše u Jindřichova Hradce. 8 lůžek, 3 ložnice, 2 koupelny, krb, pergola, společenská místnost, pejsci vítáni."
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Manrope:wght@400..800&display=swap"
+      rel="stylesheet"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Chalupa Pleše – pronájem chalupy pro 8 osob, Jižní Čechy" />
+    <meta
+      property="og:description"
+      content="Soukromí, klid a oplocená zahrada na konci vesnice. Ideální pro dvě rodiny i s pejsky."
+    />
+    <meta property="og:locale" content="cs_CZ" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LodgingBusiness",
+        "name": "Chalupa Pleše",
+        "description": "Pronájem celé chalupy pro 8 osob v obci Pleše, Jižní Čechy. Uzavřený dvůr, oplocená zahrada, krb, pergola, společenská místnost, pejsci vítáni.",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Pleše 40",
+          "addressLocality": "Pleše",
+          "postalCode": "378 21",
+          "addressRegion": "Jihočeský kraj",
+          "addressCountry": "CZ"
+        },
+        "geo": { "@type": "GeoCoordinates", "latitude": 49.19876, "longitude": 14.82343 },
+        "petsAllowed": true,
+        "numberOfRooms": 3,
+        "aggregateRating": { "@type": "AggregateRating", "ratingValue": "5.0", "reviewCount": "24" }
+      }
+    </script>
+    <script>
+      // Tmavý režim bez probliknutí: uložená volba > systémové nastavení.
+      try {
+        const s = localStorage.getItem('theme');
+        const dark = s ? s === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.classList.toggle('dark', dark);
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
