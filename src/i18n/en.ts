@@ -65,10 +65,10 @@ export const en: Dict = {
   aerial: {
     eyebrow: 'The grounds from above',
     title: 'The whole farmstead to yourselves. Take a look from above.',
-    text: 'The house, the enclosed courtyard, the lounge, the garden with its pergola and a pond right behind the fence. Hover a number or an item in the list.',
+    text: 'The house, the enclosed courtyard, the lounge, the garden with its pergola and a pond right behind the fence.',
     videoEyebrow: 'Drone video',
     videoTitle: 'A flight from the pond through the gate into the courtyard',
-    videoMeta: '1 minute · plays on click',
+    videoMeta: '1 minute',
     videoPlay: 'Play the drone video',
     spots: {
       house: { name: 'The cottage', text: 'The main house with three bedrooms, kitchen and living room.' },
@@ -84,7 +84,7 @@ export const en: Dict = {
   gallery: {
     eyebrow: 'Gallery',
     title: 'Take a look inside and out.',
-    text: (n) => `${n} photos of the house, garden and surroundings. Click any of them.`,
+    text: (n) => `${n} photos of the house, garden and surroundings.`,
     showAll: (n) => `Show all ${n} photos`,
     byRoom: 'By room',
     open: (c) => `Open photo: ${c}`,
@@ -152,7 +152,7 @@ export const en: Dict = {
   videos: {
     eyebrow: 'Video',
     title: 'Short videos straight from the cottage.',
-    text: 'Click to play. Videos load only after you click, so they never slow you down.',
+    text: 'A tour of the cottage, the garden, the lounge and the surroundings.',
     play: (t) => `Play video: ${t}`,
     titles: { 'WV3iSx-6qlU': 'Chalupa Pleše – tour', 'FD-WYk98Qy8': 'Garden and courtyard', '3_DvInDh5U4': 'The lounge', QjouojOHjpI: 'Around the cottage' },
   },
@@ -234,11 +234,11 @@ export const en: Dict = {
   calendar: {
     eyebrow: 'Availability',
     title: 'Pick your dates.',
-    text: 'Click the arrival day, then the departure day. Your dates are copied into the enquiry form below.',
-    step1: 'Step 1:',
-    step1text: 'click your arrival day',
-    step2: 'Step 2:',
-    step2text: 'now pick your departure day',
+    text: 'Live availability and an indicative price for your dates.',
+    step1: 'Arrival:',
+    step1text: 'select a day',
+    step2: 'Departure:',
+    step2text: 'select a day',
     selected: 'Selected:',
     prevMonth: 'Previous month',
     nextMonth: 'Next month',
@@ -257,8 +257,8 @@ export const en: Dict = {
     askFor: 'Request these dates',
     chooseFirst: 'Select your dates first',
     clear: 'Clear selection',
-    promptStart: 'No dates selected yet. Click an arrival day in the calendar.',
-    promptEnd: 'Now pick your departure day.',
+    promptStart: 'No dates selected yet.',
+    promptEnd: 'Departure day still to be selected.',
   },
   map: {
     eyebrow: 'Where to find us',
@@ -267,7 +267,6 @@ export const en: Dict = {
     drive: 'Driving times',
     driveNote: 'Bus stop 250 m, Doňov railway station 3 km. Village shop 5 minutes on foot, open around the clock.',
     navigateWith: 'Navigate with:',
-    navHint: 'Opens the route to the cottage in your preferred app.',
     min: (n) => (n >= 60 ? `${n / 60} h` : `${n} min`),
     pois: {
       home: { name: 'Chalupa Pleše', text: 'Pleše 40 – the last house in the village' },

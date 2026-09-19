@@ -64,10 +64,10 @@ export const cs = {
   aerial: {
     eyebrow: 'Areál z ptačí perspektivy',
     title: 'Celý statek jen pro vás. Podívejte se shora.',
-    text: 'Dům, uzavřený dvůr, společenská místnost, zahrada s pergolou a rybník hned za plotem. Najeďte na číslo nebo na položku v seznamu.',
+    text: 'Dům, uzavřený dvůr, společenská místnost, zahrada s pergolou a rybník hned za plotem.',
     videoEyebrow: 'Video z dronu',
     videoTitle: 'Prolet od rybníka branou až do dvora',
-    videoMeta: '1 minuta · přehraje se po kliknutí',
+    videoMeta: '1 minuta',
     videoPlay: 'Přehrát video z dronu',
     spots: {
       house: { name: 'Chalupa', text: 'Hlavní dům se třemi ložnicemi, kuchyní a obývacím pokojem.' },
@@ -83,7 +83,7 @@ export const cs = {
   gallery: {
     eyebrow: 'Galerie',
     title: 'Podívejte se dovnitř i ven.',
-    text: (n: number) => `${n} fotografií chalupy, zahrady a okolí. Klikněte na kteroukoliv.`,
+    text: (n: number) => `${n} fotografií chalupy, zahrady a okolí.`,
     showAll: (n: number) => `Zobrazit všech ${n} fotek`,
     byRoom: 'Podle místností',
     open: (c: string) => `Otevřít fotku: ${c}`,
@@ -151,7 +151,7 @@ export const cs = {
   videos: {
     eyebrow: 'Video',
     title: 'Krátká videa přímo z chalupy.',
-    text: 'Klikněte pro přehrání. Videa se načítají až po kliknutí, takže vás nezpomalí.',
+    text: 'Prohlídka chalupy, zahrada, společenská místnost a okolí.',
     play: (t: string) => `Přehrát video: ${t}`,
     titles: { 'WV3iSx-6qlU': 'Chalupa Pleše – prohlídka', 'FD-WYk98Qy8': 'Zahrada a dvůr', '3_DvInDh5U4': 'Společenská místnost', QjouojOHjpI: 'Okolí chalupy' } as Record<string, string>,
   },
@@ -233,11 +233,11 @@ export const cs = {
   calendar: {
     eyebrow: 'Obsazenost',
     title: 'Vyberte si termín.',
-    text: 'Klikněte na den příjezdu a poté na den odjezdu. Vybraný termín se propíše do poptávky níže.',
-    step1: 'Krok 1:',
-    step1text: 'klikněte na den příjezdu',
-    step2: 'Krok 2:',
-    step2text: 'teď vyberte den odjezdu',
+    text: 'Aktuální obsazenost a orientační cena pro váš termín.',
+    step1: 'Příjezd:',
+    step1text: 'vyberte den',
+    step2: 'Odjezd:',
+    step2text: 'vyberte den',
     selected: 'Vybráno:',
     prevMonth: 'Předchozí měsíc',
     nextMonth: 'Další měsíc',
@@ -256,8 +256,8 @@ export const cs = {
     askFor: 'Poptat tento termín',
     chooseFirst: 'Nejdřív vyberte termín',
     clear: 'Zrušit výběr',
-    promptStart: 'Zatím nemáte vybraný termín. Klikněte v kalendáři na den příjezdu.',
-    promptEnd: 'Teď vyberte den odjezdu.',
+    promptStart: 'Zatím bez vybraného termínu.',
+    promptEnd: 'Zbývá vybrat den odjezdu.',
   },
   map: {
     eyebrow: 'Kde nás najdete',
@@ -266,7 +266,6 @@ export const cs = {
     drive: 'Dojezd autem',
     driveNote: 'Autobusová zastávka 250 m, vlak Doňov 3 km. Obchod na návsi 5 minut pěšky, nonstop.',
     navigateWith: 'Navigovat:',
-    navHint: 'Otevře trasu k chalupě ve vybrané aplikaci.',
     min: (n: number) => (n >= 60 ? `${n / 60} hod` : `${n} min`),
     pois: {
       home: { name: 'Chalupa Pleše', text: 'Pleše 40 – poslední dům ve vesnici' },

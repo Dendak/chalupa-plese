@@ -61,7 +61,6 @@ export function MapSection() {
                 </a>
               ))}
             </div>
-            <p className="mt-2 text-xs text-ink-muted">{m.navHint}</p>
           </div>
         </Reveal>
 

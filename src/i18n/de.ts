@@ -65,10 +65,10 @@ export const de: Dict = {
   aerial: {
     eyebrow: 'Das Anwesen von oben',
     title: 'Der ganze Hof nur für Sie. Ein Blick von oben.',
-    text: 'Haus, geschlossener Hof, Aufenthaltsraum, Garten mit Pergola und ein Teich direkt hinter dem Zaun. Fahren Sie über eine Zahl oder einen Eintrag in der Liste.',
+    text: 'Haus, geschlossener Hof, Aufenthaltsraum, Garten mit Pergola und ein Teich direkt hinter dem Zaun.',
     videoEyebrow: 'Drohnenvideo',
     videoTitle: 'Flug vom Teich durch das Tor in den Hof',
-    videoMeta: '1 Minute · startet per Klick',
+    videoMeta: '1 Minute',
     videoPlay: 'Drohnenvideo abspielen',
     spots: {
       house: { name: 'Das Haus', text: 'Haupthaus mit drei Schlafzimmern, Küche und Wohnzimmer.' },
@@ -84,7 +84,7 @@ export const de: Dict = {
   gallery: {
     eyebrow: 'Galerie',
     title: 'Schauen Sie sich drinnen und draußen um.',
-    text: (n) => `${n} Fotos von Haus, Garten und Umgebung. Klicken Sie auf ein beliebiges.`,
+    text: (n) => `${n} Fotos von Haus, Garten und Umgebung.`,
     showAll: (n) => `Alle ${n} Fotos anzeigen`,
     byRoom: 'Nach Räumen',
     open: (c) => `Foto öffnen: ${c}`,
@@ -152,7 +152,7 @@ export const de: Dict = {
   videos: {
     eyebrow: 'Video',
     title: 'Kurze Videos direkt vom Haus.',
-    text: 'Zum Abspielen klicken. Die Videos werden erst nach dem Klick geladen und bremsen Sie nicht aus.',
+    text: 'Rundgang durchs Haus, Garten, Aufenthaltsraum und Umgebung.',
     play: (t) => `Video abspielen: ${t}`,
     titles: { 'WV3iSx-6qlU': 'Chalupa Pleše – Rundgang', 'FD-WYk98Qy8': 'Garten und Hof', '3_DvInDh5U4': 'Der Aufenthaltsraum', QjouojOHjpI: 'Rund um das Haus' },
   },
@@ -234,11 +234,11 @@ export const de: Dict = {
   calendar: {
     eyebrow: 'Belegung',
     title: 'Wählen Sie Ihren Termin.',
-    text: 'Klicken Sie auf den Anreisetag und dann auf den Abreisetag. Der Termin wird in die Anfrage unten übernommen.',
-    step1: 'Schritt 1:',
-    step1text: 'klicken Sie auf den Anreisetag',
-    step2: 'Schritt 2:',
-    step2text: 'wählen Sie jetzt den Abreisetag',
+    text: 'Aktuelle Belegung und Richtpreis für Ihren Termin.',
+    step1: 'Anreise:',
+    step1text: 'Tag wählen',
+    step2: 'Abreise:',
+    step2text: 'Tag wählen',
     selected: 'Ausgewählt:',
     prevMonth: 'Vorheriger Monat',
     nextMonth: 'Nächster Monat',
@@ -257,8 +257,8 @@ export const de: Dict = {
     askFor: 'Diesen Termin anfragen',
     chooseFirst: 'Bitte zuerst Termin wählen',
     clear: 'Auswahl aufheben',
-    promptStart: 'Noch kein Termin gewählt. Klicken Sie im Kalender auf den Anreisetag.',
-    promptEnd: 'Wählen Sie jetzt den Abreisetag.',
+    promptStart: 'Noch kein Termin gewählt.',
+    promptEnd: 'Der Abreisetag fehlt noch.',
   },
   map: {
     eyebrow: 'So finden Sie uns',
@@ -267,7 +267,6 @@ export const de: Dict = {
     drive: 'Fahrzeiten',
     driveNote: 'Bushaltestelle 250 m, Bahnhof Doňov 3 km. Dorfladen 5 Minuten zu Fuß, rund um die Uhr geöffnet.',
     navigateWith: 'Navigieren mit:',
-    navHint: 'Öffnet die Route zum Haus in der gewünschten App.',
     min: (n) => (n >= 60 ? `${n / 60} Std.` : `${n} Min.`),
     pois: {
       home: { name: 'Chalupa Pleše', text: 'Pleše 40 – das letzte Haus im Dorf' },
