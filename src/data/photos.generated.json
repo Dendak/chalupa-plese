@@ -726,5 +726,41 @@
     ],
     "avif": [],
     "lqip": "data:image/webp;base64,UklGRq4AAABXRUJQVlA4IKIAAABQBQCdASoUABsAPu1qrVCppaQiqAqpMB2JZACdL7CT/Z/8AQ65RZtFYcpTzUDvzDXHEAAAvAD7y8ZZInSxG6FTl+HgaZfpP6pAWnrlF97Yf+tOLekl7+tgYCUEIR+gA8076YtnsuueLDSsulWWHC0U/JLmQcmtnmdtpXkl5oiwb2BGICW9Gjq06IXnzSfCh/jP1twC0JDlNrBMxOqJCmOpAAA="
+  },
+  {
+    "id": "49",
+    "file": "49-dron-cely-areal.jpg",
+    "width": 1600,
+    "height": 900,
+    "webp": [
+      480,
+      960,
+      1280,
+      1600
+    ],
+    "avif": [
+      960,
+      1280,
+      1600
+    ],
+    "lqip": "data:image/webp;base64,UklGRpIAAABXRUJQVlA4IIYAAADQAwCdASoUAAsAPu1iqU2ppaOiMAgBMB2JbAAD5Sj04eVRi3qE2AAA8ClSzdkzNZM3kg1qzD7VsfWcsrWGStWTFbHtNvKXTn6XXfiHRoNfu/JNqygnCYyxFuNuAycs6aZ9gd6HNcbc0Eb+MbDMB17zJSkKs59Kd916K+DDN6tiY4N0L8YgAA=="
+  },
+  {
+    "id": "50",
+    "file": "50-dron-areal-shora.jpg",
+    "width": 1600,
+    "height": 900,
+    "webp": [
+      480,
+      960,
+      1280,
+      1600
+    ],
+    "avif": [
+      960,
+      1280,
+      1600
+    ],
+    "lqip": "data:image/webp;base64,UklGRoYAAABXRUJQVlA4IHoAAAAQBACdASoUAAsAPu1iqU2ppaOiMAgBMB2JagAAVMEx2y3W2GoWgWDewAD+iRP1/hAP2Dp+Ixhs0ka2C0pPkmdlu1C7KT1kHUNajtFRGJ0G1pHG75/c8REIj1U7UEatY1ptGUIW0xQHkZ9vbFm7QTzgwbbSP6GjUIgAAA=="
   }
 ]

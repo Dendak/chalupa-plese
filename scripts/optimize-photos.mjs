@@ -8,8 +8,8 @@ import path from 'node:path';
 
 const SRC = 'photos-src';
 const OUT = 'public/img';
-const WIDTHS = [480, 960, 1280];
-const AVIF_WIDTHS = [960, 1280];
+const WIDTHS = [480, 960, 1280, 1600];
+const AVIF_WIDTHS = [960, 1280, 1600];
 
 await mkdir(OUT, { recursive: true });
 const files = (await readdir(SRC)).filter((f) => /\.(jpe?g|png|webp)$/i.test(f)).sort();
@@ -23,7 +23,7 @@ for (const file of files) {
   const w = meta.width ?? 0;
   const h = meta.height ?? 0;
   const widths = WIDTHS.filter((x) => x <= w);
-  if (!widths.includes(w) && w < 1280) widths.push(w);
+  if (!widths.includes(w) && w < 1600) widths.push(w);
 
   const webp = [];
   const avif = [];

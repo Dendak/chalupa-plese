@@ -42,7 +42,7 @@ export const en: Dict = {
     ctaDates: 'Check availability',
     ctaPhotos: 'See the photos',
     scrollDown: 'Scroll down',
-    imgAlt: 'Enclosed courtyard of Chalupa Pleše at sunset',
+    imgAlt: 'Aerial view of Chalupa Pleše – the house, enclosed courtyard and garden',
   },
   highlights: {
     eyebrow: 'Why here',
@@ -60,6 +60,25 @@ export const en: Dict = {
       trees: { title: 'The last house in the village', text: 'Beyond the cottage there are only meadows and woods. Silence, sunsets and a sky without light pollution.' },
       fish: { title: 'Private fishing pond', text: 'Our own pond for fishing, just 5 minutes by car from the house.' },
       paw: { title: 'Pets welcome', text: 'No extra charge for dogs. The fenced garden is paradise for them.' },
+    },
+  },
+  aerial: {
+    eyebrow: 'The grounds from above',
+    title: 'The whole farmstead to yourselves. Take a look from above.',
+    text: 'The house, the enclosed courtyard, the lounge, the garden with its pergola and a pond right behind the fence. Hover a number or an item in the list.',
+    videoEyebrow: 'Drone video',
+    videoTitle: 'A flight from the pond through the gate into the courtyard',
+    videoMeta: '1 minute · plays on click',
+    videoPlay: 'Play the drone video',
+    spots: {
+      house: { name: 'The cottage', text: 'The main house with three bedrooms, kitchen and living room.' },
+      terrace: { name: 'Terrace with awning', text: 'Covered seating by the entrance, barbecue right next to it.' },
+      courtyard: { name: 'Enclosed courtyard', text: 'A lawn between the buildings, a safe spot for kids and dogs.' },
+      lounge: { name: 'Lounge', text: 'The former stables with a wood stove and a bar. Solar panels on the roof.' },
+      barn: { name: 'Barn and parking', text: 'Bike storage, parking for 4 cars right in front of the house.' },
+      pergola: { name: 'Pergola with fireplace', text: 'A big table for 8 and an outdoor fireplace for barbecues.' },
+      garden: { name: 'Fenced garden', text: 'Football goals, sun loungers, a hammock and plenty of room to play.' },
+      pond: { name: 'Pond behind the fence', text: 'Calm water right beyond the garden.' },
     },
   },
   gallery: {
@@ -126,6 +145,8 @@ export const en: Dict = {
       '46': 'A little gift for our New Year’s Eve guests',
       '47': 'The pond in winter',
       '48': 'Fields and meadows around Pleše',
+      '49': 'The whole property from a drone – house, courtyard, wall and garden',
+      '50': 'The grounds from above – house, barn, lounge, pergola and pond',
     },
   },
   videos: {

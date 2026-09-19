@@ -41,7 +41,7 @@ export const cs = {
     ctaDates: 'Volné termíny',
     ctaPhotos: 'Prohlédnout fotky',
     scrollDown: 'Posunout dolů',
-    imgAlt: 'Uzavřený dvůr chalupy Pleše při západu slunce',
+    imgAlt: 'Letecký pohled na chalupu Pleše – dům, uzavřený dvůr a zahrada',
   },
   highlights: {
     eyebrow: 'Proč právě sem',
@@ -59,6 +59,25 @@ export const cs = {
       trees: { title: 'Poslední dům ve vesnici', text: 'Za chalupou už jsou jen louky a lesy. Ticho, západy slunce a hvězdy bez světelného smogu.' },
       fish: { title: 'Soukromý rybník', text: 'Vlastní rybník k rybaření jen 5 minut autem od chalupy.' },
       paw: { title: 'Mazlíčci vítáni', text: 'Poplatek za psa je v ceně. Oplocená zahrada je pro ně hotovým rájem.' },
+    },
+  },
+  aerial: {
+    eyebrow: 'Areál z ptačí perspektivy',
+    title: 'Celý statek jen pro vás. Podívejte se shora.',
+    text: 'Dům, uzavřený dvůr, společenská místnost, zahrada s pergolou a rybník hned za plotem. Najeďte na číslo nebo na položku v seznamu.',
+    videoEyebrow: 'Video z dronu',
+    videoTitle: 'Prolet od rybníka branou až do dvora',
+    videoMeta: '1 minuta · přehraje se po kliknutí',
+    videoPlay: 'Přehrát video z dronu',
+    spots: {
+      house: { name: 'Chalupa', text: 'Hlavní dům se třemi ložnicemi, kuchyní a obývacím pokojem.' },
+      terrace: { name: 'Terasa s markýzou', text: 'Kryté posezení u vchodu, gril hned vedle.' },
+      courtyard: { name: 'Uzavřený dvůr', text: 'Trávník mezi budovami, bezpečné místo pro děti i pejsky.' },
+      lounge: { name: 'Společenská místnost', text: 'Bývalé chlívy s kamny a barem. Na střeše solární panely.' },
+      barn: { name: 'Stodola a parkování', text: 'Úschova kol, parkování pro 4 auta přímo před domem.' },
+      pergola: { name: 'Pergola s krbem', text: 'Velký stůl pro 8 lidí a venkovní krb na grilování.' },
+      garden: { name: 'Oplocená zahrada', text: 'Fotbalové branky, lehátka, houpací síť a spousta místa na hry.' },
+      pond: { name: 'Rybník za plotem', text: 'Klidná vodní hladina hned za zahradou.' },
     },
   },
   gallery: {
@@ -125,6 +144,8 @@ export const cs = {
       '46': 'Malý dárek pro naše silvestrovské hosty',
       '47': 'Zimní rybník',
       '48': 'Pole a louky kolem Pleší',
+      '49': 'Celý areál z dronu – dům, dvůr, zeď a zahrada',
+      '50': 'Areál shora – dům, stodola, společenská místnost, pergola a rybník',
     } as Record<string, string>,
   },
   videos: {

@@ -2,6 +2,7 @@ import { useState, lazy, Suspense } from 'react';
 import { Nav } from './components/Nav';
 import { Hero } from './components/Hero';
 import { Highlights } from './components/Highlights';
+import { Aerial } from './components/Aerial';
 import { Gallery } from './components/Gallery';
 import { Videos } from './components/Videos';
 import { Rooms } from './components/Rooms';
@@ -23,6 +24,7 @@ export default function App() {
       <main id="main">
         <Hero />
         <Highlights />
+        <Aerial />
         <Gallery />
         <Rooms />
         <Videos />

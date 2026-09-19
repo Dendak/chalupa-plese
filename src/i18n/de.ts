@@ -42,7 +42,7 @@ export const de: Dict = {
     ctaDates: 'Freie Termine',
     ctaPhotos: 'Fotos ansehen',
     scrollDown: 'Nach unten scrollen',
-    imgAlt: 'Geschlossener Innenhof der Chalupa Pleše bei Sonnenuntergang',
+    imgAlt: 'Luftaufnahme der Chalupa Pleše – Haus, geschlossener Hof und Garten',
   },
   highlights: {
     eyebrow: 'Warum gerade hier',
@@ -60,6 +60,25 @@ export const de: Dict = {
       trees: { title: 'Das letzte Haus im Dorf', text: 'Hinter dem Haus gibt es nur noch Wiesen und Wälder. Ruhe, Sonnenuntergänge und ein Sternenhimmel ohne Lichtsmog.' },
       fish: { title: 'Eigener Angelteich', text: 'Unser eigener Teich zum Angeln, nur 5 Autominuten vom Haus.' },
       paw: { title: 'Haustiere willkommen', text: 'Hunde kosten nichts extra. Der eingezäunte Garten ist ein Paradies für sie.' },
+    },
+  },
+  aerial: {
+    eyebrow: 'Das Anwesen von oben',
+    title: 'Der ganze Hof nur für Sie. Ein Blick von oben.',
+    text: 'Haus, geschlossener Hof, Aufenthaltsraum, Garten mit Pergola und ein Teich direkt hinter dem Zaun. Fahren Sie über eine Zahl oder einen Eintrag in der Liste.',
+    videoEyebrow: 'Drohnenvideo',
+    videoTitle: 'Flug vom Teich durch das Tor in den Hof',
+    videoMeta: '1 Minute · startet per Klick',
+    videoPlay: 'Drohnenvideo abspielen',
+    spots: {
+      house: { name: 'Das Haus', text: 'Haupthaus mit drei Schlafzimmern, Küche und Wohnzimmer.' },
+      terrace: { name: 'Terrasse mit Markise', text: 'Überdachter Sitzplatz am Eingang, der Grill steht gleich daneben.' },
+      courtyard: { name: 'Geschlossener Hof', text: 'Rasen zwischen den Gebäuden, ein sicherer Platz für Kinder und Hunde.' },
+      lounge: { name: 'Aufenthaltsraum', text: 'Der ehemalige Stall mit Kaminofen und Bar. Solaranlage auf dem Dach.' },
+      barn: { name: 'Scheune und Parkplätze', text: 'Abstellraum für Fahrräder, Parkplätze für 4 Autos direkt vor dem Haus.' },
+      pergola: { name: 'Pergola mit Kamin', text: 'Großer Tisch für 8 Personen und ein Außenkamin zum Grillen.' },
+      garden: { name: 'Eingezäunter Garten', text: 'Fußballtore, Liegen, Hängematte und viel Platz zum Spielen.' },
+      pond: { name: 'Teich hinter dem Zaun', text: 'Ruhige Wasserfläche gleich hinter dem Garten.' },
     },
   },
   gallery: {
@@ -126,6 +145,8 @@ export const de: Dict = {
       '46': 'Kleines Geschenk für unsere Silvestergäste',
       '47': 'Der Teich im Winter',
       '48': 'Felder und Wiesen rund um Pleše',
+      '49': 'Das ganze Anwesen aus der Drohne – Haus, Hof, Mauer und Garten',
+      '50': 'Das Anwesen von oben – Haus, Scheune, Aufenthaltsraum, Pergola und Teich',
     },
   },
   videos: {

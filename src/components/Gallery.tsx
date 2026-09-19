@@ -8,7 +8,7 @@ import { CATEGORY_IDS, PHOTOS, type Photo, type PhotoCategory } from '@/data/pho
 import { useI18n } from '@/i18n';
 
 // Mozaika nahoře: 1 velká + 4 malé (id fotek)
-const MOSAIC = ['15', '29', '09', '35', '38'];
+const MOSAIC = ['49', '15', '09', '35', '29'];
 const ROW_H = 'h-[220px] sm:h-[260px] lg:h-[300px]';
 
 export function Gallery() {

@@ -55,6 +55,8 @@ const META: Record<string, { cat: PhotoCategory; featured?: boolean }> = {
   '46': { cat: 'interier' },
   '47': { cat: 'okoli' },
   '48': { cat: 'okoli' },
+  '49': { cat: 'dum', featured: true },
+  '50': { cat: 'dum' },
 };
 
 export interface Photo {

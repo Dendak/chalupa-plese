@@ -7,7 +7,7 @@ import { useI18n } from '@/i18n';
 
 export function Hero() {
   const { t } = useI18n();
-  const hero = photoById('15');
+  const hero = photoById('49');
   const ease = [0.16, 1, 0.3, 1] as const;
   const chips = [
     { icon: BedDouble, label: t.hero.beds(SITE.capacity.beds) },
@@ -18,7 +18,7 @@ export function Hero() {
   return (
     <section id="top" className="relative isolate min-h-[100svh] overflow-hidden">
       <div className="absolute inset-0 -z-10">
-        <Picture photo={hero} priority sizes="100vw" className="hero-parallax h-full w-full" imgClassName="object-[center_60%]" alt={t.hero.imgAlt} />
+        <Picture photo={hero} priority sizes="100vw" className="hero-parallax h-full w-full" imgClassName="object-[68%_50%] sm:object-center" alt={t.hero.imgAlt} />
         <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/20 to-bg" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/45 via-transparent to-transparent" />
       </div>
